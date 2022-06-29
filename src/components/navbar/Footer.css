@@ -1,0 +1,21 @@
+
+#footer .copyright {
+    text-align: center;
+    float: left;
+    color: #47536e;
+  }
+#footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  color: white;
+  background-color:#e6e9f0;
+}
+  @media (max-width: 768px) {
+    #footer .copyright, #footer .credits {
+      float: none;
+      text-align: center;
+      padding: 5px 0;
+    }
+  }
