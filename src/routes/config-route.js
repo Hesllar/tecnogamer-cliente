@@ -1,5 +1,8 @@
 export const routes = {
     home:'/',
-    products:'/products'
+    products:'/products',
+    memoria:'/memoria',
+    mouseTeclado:'/mouseyteclado',
+    gabinete:'/gabinete'
 }
 
