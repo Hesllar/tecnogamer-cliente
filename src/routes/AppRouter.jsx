@@ -6,6 +6,8 @@ import {MouseTeclado} from '../page/categoria/MouseTeclado';
 import {Gabinete} from '../page/categoria/Gabinete';
 import {Memoria} from '../page/categoria/Memoria';
 import { routes }  from './config-route';
+import { LoginPage }  from '../page/user/LoginPage';
+import { RegisterPage }  from '../page/user/RegisterPage';
 import  NotFoundPages  from '../page/errores/NotFoundPage';
 
 export const AppRouter = () => {
@@ -17,6 +19,8 @@ export const AppRouter = () => {
             <Route  path={routes.mouseTeclado} element={<MouseTeclado />}/>
             <Route  path={routes.gabinete} element={< Gabinete/>}/>
             <Route  path={routes.memoria} element={<Memoria />}/>
+            <Route  path={routes.login} element={<LoginPage />}/>
+            <Route  path={routes.register} element={<RegisterPage />}/>
         </Route>
           {/* Ventana de errores  */}
         <Route exact path="*" element={<NotFoundPages/>}/>
