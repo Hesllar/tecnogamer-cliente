@@ -3,6 +3,8 @@ export const routes = {
     products:'/products',
     memoria:'/memoria',
     mouseTeclado:'/mouseyteclado',
-    gabinete:'/gabinete'
+    gabinete:'/gabinete',
+    login:'/login',
+    register:'/register'
 }
 
