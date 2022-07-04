@@ -3,7 +3,6 @@ import imagen4 from '../../img/Carousel/celulares.png';
 import imagen2 from '../../img/Carousel/intelgaming.png';
 import imagen3 from '../../img/Carousel/notebook.png';
 import imagen1 from '../../img/Carousel/oferta.png';
-import './CarrouselHome.css';
 
 export const CarouselHome = ()  =>{
 
