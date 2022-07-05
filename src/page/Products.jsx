@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState,useEffect } from 'react';
- import {Table} from 'react-bootstrap';
-const url = 'http://localhost:8000/api/v0/allproduct';
+ import {Container,Row,Card,Button} from 'react-bootstrap';
+const url = 'http://localhost:5000/api/v0/allproduct';
 
 
 export const Products = () => {
@@ -24,22 +24,26 @@ export const Products = () => {
   console.log(product)
   return (
     <>
-        <Table striped bordered hover variant="dark">
-                            <thead>
-                                <tr>
-                                    <th>Titulo</th>
-                                    <th>Stock</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {product.map((pro,index)=> (
-                                    <tr key={pro._id}>
-                                        <td>{pro.nombreProducto}</td>
-                                        <td >{pro.stock}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </Table>
+    <Container>
+        <Row>
+            {product.map((pro)=> (
+                <Card style={{ width: '18rem' }}>
+                    <Card.Body>
+                        <Card.Title>{pro.nombreProducto}</Card.Title>
+                        <label >{pro.stock}</label>
+                        <Card.Text>
+                            {pro.descripcion}
+                        </Card.Text>
+                    </Card.Body>
+                    <Card.Img variant="top" src="holder.js/100px180" />
+                    <Card.Body>
+                        <label>{pro.precio}</label>
+                        <Button variant="primary">carrito</Button>
+                    </Card.Body>
+                </Card>
+            ))}
+        </Row>
+    </Container>
     </>
   )
 }
