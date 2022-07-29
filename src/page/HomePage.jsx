@@ -22,7 +22,7 @@ export const HomePage = () => {
             <center >Estas Ofertas Son Para Ti <FontAwesomeIcon icon={faRocket} />{" "}</center>
           </Col>
           <Col className='col-xs-12 col-sm-4  col-md-2 '>
-            <Col className='col-xs-12 col-sm-12  col-md-12 color' class="thumbnail" >
+            <Col className='col-xs-12 col-sm-12  col-md-12 color thumbnail'>
               <img src={imagen1} alt="prueba" width='100%' height='100%'/>
             </Col>
             <Col className='col-xs-12 col-sm-12  col-md-126 color' >
