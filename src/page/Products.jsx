@@ -26,6 +26,7 @@ export const Products = () => {
                                                             <label>${pro.precio}</label>
                                                         </Card.Body>
                                                         <Button className='m-1' variant="primary">carrito</Button>
+                                                        <Button className='m-1' variant="primary">Ver detalles</Button>
                                                     </Card>
                                                 </Col>
                                             ))

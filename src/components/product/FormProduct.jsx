@@ -14,20 +14,23 @@ export const FormProduct = ({category,mark, newProduct}) => {
     stock:0,
     precio:'',
     descripcion:'',
-    categoriaId:'',
-    marcaId:''
   });
 
   const handleSubmit = async(e) =>{
-    
-    e.preventDefault();
+    try {
+      e.preventDefault();
 
-    const {data} = await axios.post(URLPOST,formState);
+      const {data} = await axios.post(URLPOST,formState);
 
-    newProduct(data.Data);
+      newProduct(data.Data);
 
-    
-    onResetForm();
+      onResetForm();
+      
+    } catch (error) {
+
+      console.log(error)
+    }
+   
   }
 
 
@@ -59,7 +62,7 @@ export const FormProduct = ({category,mark, newProduct}) => {
             <Form.Group as={Row} className="mb-3" >
               <Col sm="12">
                 <Form.Label>Categoria</Form.Label>
-                <Form.Select defaultValue={formState.categoriaId} onChange={onInputChange} name="categoriaId">
+                <Form.Select defaultValue={'Seleccione'} onChange={onInputChange} name="categoriaId">
                   <option value='Seleccione' disabled> Seleccione </option>
                   {
                     category.map(c => (<CategoryList key={c._id} category={c}/>))

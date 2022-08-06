@@ -22,11 +22,22 @@ export const CrearProducto = () => {
     })
   }
 
+  const deleteProduct = (id) =>{
+    
+    const newData = data.filter( p => p._id !== id);
+
+    setProduct({
+      data: newData,
+      isLoading:false
+    });
+
+  }
+
   return (
     <Container className='regcontrainer'>
       <Row className='mt-2 mb-2'>
         <FormProduct category={category} mark={mark} newProduct={newProduct}/>
-        <ProductsList data={data} isLoading={isLoading}/>
+        <ProductsList data={data} isLoading={isLoading} deleteProduct={deleteProduct}/>
       </Row>
     </Container >
   )

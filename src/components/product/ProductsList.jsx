@@ -1,19 +1,18 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect,useState } from 'react';
 import {Col,Spinner } from 'react-bootstrap';
-import { useGetProducts } from '../../hooks';
 import { useModal } from '../../hooks/useModal';
 import {EditProduct} from '../product/EditProduct';
+import { DeleteProduct } from '../product/DeleteProduct';
 
-export const ProductsList = ({data, isLoading}) => {
+export const ProductsList = ({data, isLoading,deleteProduct}) => {
 
     const [isOpenEditarPM,openEditarPM,closeEditarPM] = useModal();
+    const [isOpenDeletePM,openDeletePM,closeDeletePM] = useModal();
 
     const [value, setValue] = useState();
-    console.log(value)
+    
     useEffect(() => {
     }, [value])
-    
 
     return (
         <>
@@ -32,7 +31,10 @@ export const ProductsList = ({data, isLoading}) => {
                                                         setValue(pro);
                                                         openEditarPM();
                                                         }}>Editar</button>
-                                                    <button className='btn btn-danger'>Borrar</button>
+                                                    <button className='btn btn-danger' onClick={() => {
+                                                        setValue(pro._id);
+                                                        openDeletePM();
+                                                    }}>Borrar</button>
                                                 </li> 
                                             ))
                                         }
@@ -45,6 +47,12 @@ export const ProductsList = ({data, isLoading}) => {
                 isOpen={isOpenEditarPM}
                 close={closeEditarPM}
                 value={value}
+            />
+            <DeleteProduct 
+                isOpen={isOpenDeletePM}
+                close={closeDeletePM}
+                value={value}
+                deleteProduct={deleteProduct}
             />
         </>
     )
