@@ -19,7 +19,14 @@ export const Header = () => {
         <Nav className="mr-auto">
           <Nav.Link as={NavLink} to={routes.home} >Inicio</Nav.Link>
           <Nav.Link as={NavLink} to={routes.products}>Productos</Nav.Link>
-          <Nav.Link as={NavLink} to={routes.addProduct}>Crear Producto</Nav.Link>
+          <NavDropdown
+            id="nav-dropdown-dark-example"
+            menuVariant="dark"
+            title='Administrador'>
+            <NavDropdown.Item as={NavLink} to={routes.addCategory} >Agregar Categorias</NavDropdown.Item>
+            <NavDropdown.Item as={NavLink} to={routes.addMark} >Agregar Marcas</NavDropdown.Item>
+            <NavDropdown.Item as={NavLink} to={routes.addProduct} >Agregar Productos</NavDropdown.Item>
+          </NavDropdown>
           <NavDropdown
             id="nav-dropdown-dark-example"
             menuVariant="dark"
