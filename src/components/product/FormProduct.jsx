@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { Form, Button, Col, Card, Row} from 'react-bootstrap';
 import { MarkList } from './MarkList';
-import { CategoryList } from './CategoryList';
+import { CategoryList } from '../category/CategoryList';
 import { useForm } from '../../hooks';
 
 const URLPOST = 'http://localhost:8000/api/v0/registerproduct';

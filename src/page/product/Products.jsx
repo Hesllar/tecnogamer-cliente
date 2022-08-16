@@ -1,5 +1,7 @@
-import { Container, Row, Card, Button, Col, Spinner  } from 'react-bootstrap';
-import { useGetProducts } from '../hooks/useGetProducts';
+import { Link } from 'react-router-dom';
+import { Container, Row, Card, Button, Col, Spinner,Nav  } from 'react-bootstrap';
+import { useGetProducts } from '../../hooks/useGetProducts';
+import { routes } from '../../routes/config-route';
 
 
 export const Products = () => {
@@ -26,7 +28,7 @@ export const Products = () => {
                                                             <label>${pro.precio}</label>
                                                         </Card.Body>
                                                         <Button className='m-1' variant="primary">carrito</Button>
-                                                        <Button className='m-1' variant="primary">Ver detalles</Button>
+                                                        <Link className='m-1 btn btn-primary'  to={`${routes.viewProduct}/${pro._id}`} >Ver detalle</Link>
                                                     </Card>
                                                 </Col>
                                             ))

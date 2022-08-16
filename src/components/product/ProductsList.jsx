@@ -4,15 +4,13 @@ import { useModal } from '../../hooks/useModal';
 import {EditProduct} from '../product/EditProduct';
 import { DeleteProduct } from '../product/DeleteProduct';
 
-export const ProductsList = ({data, isLoading,deleteProduct}) => {
+export const ProductsList = ({data, isLoading,deleteProduct, mark, category}) => {
 
     const [isOpenEditarPM,openEditarPM,closeEditarPM] = useModal();
     const [isOpenDeletePM,openDeletePM,closeDeletePM] = useModal();
 
     const [value, setValue] = useState();
     
-    useEffect(() => {
-    }, [value])
 
     return (
         <>
@@ -20,6 +18,8 @@ export const ProductsList = ({data, isLoading,deleteProduct}) => {
             {
                 (isLoading) ?   (<Spinner animation="border" />)
                             :   (
+                                <>
+                                
                                     <ul className="list-group">
                                         {
                                             data.map(pro => (
@@ -39,15 +39,19 @@ export const ProductsList = ({data, isLoading,deleteProduct}) => {
                                             ))
                                         }
                                     </ul>
+                                    <EditProduct 
+                                        isOpen={isOpenEditarPM}
+                                        close={closeEditarPM}
+                                        value={value}
+                                        mark={mark}
+                                        category={category}
+                                    />
+                                </>
                                 )
             }
                 
             </Col>
-            <EditProduct 
-                isOpen={isOpenEditarPM}
-                close={closeEditarPM}
-                value={value}
-            />
+            
             <DeleteProduct 
                 isOpen={isOpenDeletePM}
                 close={closeDeletePM}

@@ -1,9 +1,9 @@
 
 
 import { Row, Container,Col } from 'react-bootstrap';
-import { FormProduct } from '../components/product/FormProduct';
-import { ProductsList } from '../components/product/ProductsList';
-import { useGetCategory, useGetMarks, useGetProducts } from '../hooks';
+import { FormProduct } from '../../../components/product/FormProduct';
+import { ProductsList } from '../../../components/product/ProductsList';
+import { useGetCategory, useGetMarks, useGetProducts } from '../../../hooks';
 
 export const CrearProducto = () => {
 
@@ -37,7 +37,7 @@ export const CrearProducto = () => {
     <Container className='regcontrainer'>
       <Row className='mt-2 mb-2'>
         <FormProduct category={category} mark={mark} newProduct={newProduct}/>
-        <ProductsList data={data} isLoading={isLoading} deleteProduct={deleteProduct}/>
+        <ProductsList data={data} isLoading={isLoading} deleteProduct={deleteProduct} mark={mark} category={category}/>
       </Row>
     </Container >
   )
