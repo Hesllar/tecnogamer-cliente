@@ -20,6 +20,7 @@ export const useGetMarks = () => {
     
 
     return{
-        mark
+        mark,
+        setMarca
     }
 }
