@@ -21,6 +21,7 @@ export const useGetCategory = () => {
     }, []);
 
     return{
-        category
+        category,
+        setCategory
     }
 }
