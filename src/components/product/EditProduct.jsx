@@ -1,10 +1,33 @@
 import { useEffect,useState } from 'react'
-import {Modal,Form,Alert,Button} from 'react-bootstrap'
+import {Modal,Form,Alert,Button,Col,Card,Row} from 'react-bootstrap'
 import { useForm } from '../../hooks';
+import {Link,useNavigate} from 'react-router-dom';
 import { CategoryList } from '../category/CategoryList';
+import { MarkList } from './MarkList';
 
-export const EditProduct = ({isOpen,close,value, mark, category}) => {
+export const EditProduct = ({isOpen,close,value,mark,category}) => {
+   
+    const {register,formState,onResetForm} = useForm();
+    const [name, setName] = useState(value.nombreProducto);
+    const [stock, setStock] = useState(value.stock);
+    const [precio, setPrecio] = useState(value.precio);
+    const [descripcion, setDescripcion] = useState(value.descripcion);
+    const [cat, setCat] = useState(value.categoriaId);
+    const [marka, setMarka] = useState(value.marcaId);
+    const navigate = useNavigate();    
+    console.log(mark);
+    useEffect(()=>{
+        if(!isOpen){
+            onResetForm()
+        }
+    },[isOpen])
 
+    const handleSubmit = (e) => {
+        // e.preventDefault();
+        // updateEmployee(id, updatedEmployee)
+    }
+
+      
 // const [cat, setCat] = useState([]);
 //   const [mak, setMak] = useState([]);
 
@@ -45,8 +68,63 @@ export const EditProduct = ({isOpen,close,value, mark, category}) => {
 //   }, [isOpen])
   
 
-//   return (
-
+  return (
+        <Modal show={isOpen} onHide={close}>
+            <Modal.Header > 
+                <Modal.Title>Editar Producto</Modal.Title>
+            </Modal.Header>
+            <Col className="mt-3">
+                <Card id="cardregister" style={{ maxWidth: '400px' }} className=" mx-auto p-2 ">
+                    <Form onSubmit={handleSubmit} >
+                        <Form.Group as={Row} className="mb-3">
+                        <Col sm="12">
+                            <Form.Control name="name" type="text" placeholder="Ingrese un Producto" value={name} onChange={(e)=> setName(e.target.value)} required/>
+                        </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3">
+                        <Col sm="12">
+                            <Form.Control type="number" name="stock" placeholder="Ingrese Stock" value={stock} onChange={(e)=> setStock(e.target.value)} required />
+                        </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3" >
+                        <Col sm="12">
+                            <Form.Control autoComplete="true" name="precio" type="text" placeholder="Ingrese Precio" value={precio} onChange={(e)=> setPrecio(e.target.value)} required />
+                        </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3" >
+                        <Col sm="12">
+                            <Form.Control as='textarea' name="descripcion" type="text" placeholder="Descripción" value={descripcion} onChange={(e)=> setDescripcion(e.target.value)} required />
+                        </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3" >
+                        <Col sm="12">
+                            <Form.Label>Categoria</Form.Label>
+                            <Form.Select  name="cat"  defaultValue={cat[0]._id} onChange={(e)=> setCat(e.target.value)}  >
+                                <option value="Seleccione" disabled> Seleccione </option>
+                                {
+                                    category.map(c => (<CategoryList key={c._id} category={c}/>))
+                                }
+                            </Form.Select>
+                        </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3" >
+                        <Col sm="12">
+                            <Form.Label>Marca</Form.Label>
+                            <Form.Select name="marka"  defaultValue={marka[0]._id} onChange={(e)=> setMarka(e.target.value)} >
+                                <option value="Seleccione" disabled> Seleccione </option>
+                                {
+                                    mark.map(m => (<MarkList key={m._id} mark={m}/>))
+                                }
+                            </Form.Select>
+                        </Col>
+                        </Form.Group>
+                        <Form.Group >
+                            <Button  type="submit" className="RegisterBoton mt-2" variant="success"  >Actualizar Producto</Button>
+                        </Form.Group>
+                    </Form>
+                </Card>
+            </Col>
+        </Modal>
 //     <Modal show={isOpen} onHide={close}>
 //         <Modal.Header > 
 //             <Modal.Title>Editar Usuario</Modal.Title>
@@ -123,5 +201,5 @@ export const EditProduct = ({isOpen,close,value, mark, category}) => {
 //       </Form>
 //     </Modal>
     
-//   )
+  )
 }

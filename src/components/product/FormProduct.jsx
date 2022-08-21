@@ -4,6 +4,7 @@ import { Form, Button, Col, Card, Row} from 'react-bootstrap';
 import { MarkList } from './MarkList';
 import { CategoryList } from '../category/CategoryList';
 import { useForm } from '../../hooks';
+import { Nav } from 'react-bootstrap';
 
 const URLPOST = 'http://localhost:8000/api/v0/registerproduct';
 
@@ -37,7 +38,7 @@ export const FormProduct = ({category,mark, newProduct}) => {
   return (
     <Col>
         <Card id="cardregister" style={{ maxWidth: '400px' }} className=" mx-auto p-2 ">
-          <h3 className='regtitle'>Registro</h3>
+          <h3 className='regtitle'>Registro de Producto</h3>
           <Form className='Formregister' onSubmit={handleSubmit}>
             <Form.Group as={Row} className="mb-3">
               <Col sm="12">
@@ -81,12 +82,11 @@ export const FormProduct = ({category,mark, newProduct}) => {
                 </Form.Select>
               </Col>
             </Form.Group>
-            <Form.Group>
-              <Link to="/" className="linkInicio">&larr; Volver Al Inicio</Link>
+            <Form.Group >
+              <Button type="submit" className="RegisterBoton mt-2" variant="success"  >Registrar Producto</Button>
+              <Link to="/" className="linkInicio"><Button  className="RegisterBoton mt-2 " style={{marginLeft: "10px"}} variant="warning" >Cancelar</Button></Link>
             </Form.Group>
-            <Form.Group>
-              <Button type="submit" className="RegisterBoton mt-2" variant="primary" >Registrarse</Button>
-            </Form.Group>
+    
           </Form>
         </Card>
       </Col>

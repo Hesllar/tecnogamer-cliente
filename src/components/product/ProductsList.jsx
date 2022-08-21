@@ -8,7 +8,6 @@ export const ProductsList = ({data, isLoading,deleteProduct, mark, category}) =>
 
     const [isOpenEditarPM,openEditarPM,closeEditarPM] = useModal();
     const [isOpenDeletePM,openDeletePM,closeDeletePM] = useModal();
-
     const [value, setValue] = useState();
     
 
@@ -19,7 +18,6 @@ export const ProductsList = ({data, isLoading,deleteProduct, mark, category}) =>
                 (isLoading) ?   (<Spinner animation="border" />)
                             :   (
                                 <>
-                                
                                     <ul className="list-group">
                                         {
                                             data.map(pro => (
@@ -29,23 +27,14 @@ export const ProductsList = ({data, isLoading,deleteProduct, mark, category}) =>
                                                     </span> 
                                                     <button className='btn btn-primary'  onClick={() => {
                                                         setValue(pro);
-                                                        openEditarPM();
-                                                        }}>Editar</button>
+                                                        openEditarPM();}}>Editar</button>
                                                     <button className='btn btn-danger' onClick={() => {
                                                         setValue(pro._id);
-                                                        openDeletePM();
-                                                    }}>Borrar</button>
+                                                        openDeletePM();}}>Borrar</button>
                                                 </li> 
                                             ))
                                         }
                                     </ul>
-                                    <EditProduct 
-                                        isOpen={isOpenEditarPM}
-                                        close={closeEditarPM}
-                                        value={value}
-                                        mark={mark}
-                                        category={category}
-                                    />
                                 </>
                                 )
             }
@@ -58,6 +47,14 @@ export const ProductsList = ({data, isLoading,deleteProduct, mark, category}) =>
                 value={value}
                 deleteProduct={deleteProduct}
             />
+            { isOpenEditarPM ? <EditProduct  
+                isOpen={isOpenEditarPM}
+                close={closeEditarPM}
+                value={value}
+                mark={mark}
+                category={category}
+            />: null }
+            
         </>
     )
 }
