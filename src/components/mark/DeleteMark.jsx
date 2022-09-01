@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import {Modal,Alert,Button} from 'react-bootstrap'
 import axios from 'axios'
 
@@ -22,13 +21,8 @@ export const DeleteMark = ({isOpen,close,value,deleteMark}) => {
         
     }
 
-    useEffect(()=>{
-        if(!isOpen){
-            
-        }
-    },[isOpen]);
 
-  return (
+    return (
         <Modal show={isOpen} onHide={close}>
             <Modal.Header > 
                 <Modal.Title>Eliminar Marca</Modal.Title>
@@ -45,5 +39,5 @@ export const DeleteMark = ({isOpen,close,value,deleteMark}) => {
                 <Button variant="danger" onClick={() =>{handleDelete(value)}} >Eliminar Marca</Button>
             </Modal.Footer>
         </Modal>
-  )
+    )
 }

@@ -5,7 +5,7 @@ import { DeleteCategory } from './DeleteCategory';
 import { EditCategory } from './EditCategory';
 
 
-export const CategoryListTable = ({category, deleteCategory}) => {
+export const CategoryListTable = ({category, deleteCategory,setIsUpdate}) => {
 
     const [value, setValue] = useState();
 
@@ -26,41 +26,52 @@ export const CategoryListTable = ({category, deleteCategory}) => {
         openEdit();
     }
 
+
+    
+  
     return (
-        <Col>
-                {
-                    (category.length === 0) ?   (<Spinner animation="border" />)
-                                :   (
-                                    <>
-                                    
-                                        <ul className="list-group">
-                                            {
-                                                category.map(c => (
-                                                    <li key={c._id} className="list-group-item d-flex justify-content-between">
-                                                        <span  className="align-self-center">
-                                                            {c.nombreCategoria}
-                                                        </span> 
-                                                        <button className='btn btn-primary' onClick={() => handleEdit(c)}>Editar</button>
-                                                        <button className='btn btn-danger' onClick={() => handleDelete(c._id)}>Borrar</button>
-                                                    </li> 
-                                                ))
-                                            }
-                                        </ul>
-                                        <EditCategory
-                                            isOpen={isOpenEdit}
-                                            close={closeEdit}
-                                            value={value}
-                                        />
-                                        <DeleteCategory 
-                                            isOpen={isOpenDelete}
-                                            close={closeDelete}
-                                            value={value}
-                                            deleteCategory={deleteCategory}
-                                        />
-                                    </>
-                                    )
-                }
-                    
-        </Col>
+        <>
+            <Col>
+                    {
+                        (category.length === 0) ?   (<Spinner animation="border" />)
+                                    :   (
+                                        <>
+                                        
+                                            <ul className="list-group">
+                                                {
+                                                    category.map(c => (
+                                                        <li key={c._id} className="list-group-item d-flex justify-content-between">
+                                                            <span  className="align-self-center">
+                                                                {c.nombreCategoria}
+                                                            </span> 
+                                                            <button className='btn btn-primary' onClick={() => handleEdit(c)}>Editar</button>
+                                                            <button className='btn btn-danger' onClick={() => handleDelete(c._id)}>Borrar</button>
+                                                        </li> 
+                                                    ))
+                                                }
+                                            </ul>
+                                        </>
+                                        )
+                    }
+                        
+            </Col>
+            {
+               (isOpenEdit) 
+                ?   <EditCategory 
+                        isOpen={isOpenEdit} 
+                        close={closeEdit} 
+                        value={value} 
+                        setIsUpdate={setIsUpdate}
+                    />
+                :null
+            }
+            <DeleteCategory 
+                isOpen={isOpenDelete}
+                close={closeDelete}
+                value={value}
+                deleteCategory={deleteCategory}
+            />
+        </>
+        
     )
 }

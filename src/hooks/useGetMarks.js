@@ -5,6 +5,8 @@ const urlMarca = 'http://localhost:8000/api/v0/allmark';
 export const useGetMarks = () => {
     const [mark, setMarca] = useState([]);
 
+    const [isUpdate, setIsUpdate] = useState(false);
+
     const listMark = async () => {
 
         const resMark = await axios.get(urlMarca);
@@ -16,11 +18,19 @@ export const useGetMarks = () => {
 
     useEffect(() => {
       listMark();
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if(isUpdate){
+            listMark();
+            setIsUpdate(false);
+        }
+    }, [isUpdate]);
     
 
     return{
         mark,
-        setMarca
+        setMarca,
+        setIsUpdate
     }
 }

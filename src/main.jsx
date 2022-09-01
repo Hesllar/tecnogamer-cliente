@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {HashRouter as Router } from 'react-router-dom';
 import { AppRouter } from './routes/AppRouter';
 
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   //<React.StrictMode>
     <Router >

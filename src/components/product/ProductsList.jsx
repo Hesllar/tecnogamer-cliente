@@ -1,10 +1,10 @@
-import { useEffect,useState } from 'react';
+import {useState} from 'react';
 import {Col,Spinner } from 'react-bootstrap';
 import { useModal } from '../../hooks/useModal';
 import {EditProduct} from '../product/EditProduct';
 import { DeleteProduct } from '../product/DeleteProduct';
 
-export const ProductsList = ({data, isLoading,deleteProduct, mark, category}) => {
+export const ProductsList = ({data, isLoading,deleteProduct, mark, category, setIsUpdate}) => {
 
     const [isOpenEditarPM,openEditarPM,closeEditarPM] = useModal();
     const [isOpenDeletePM,openDeletePM,closeDeletePM] = useModal();
@@ -14,7 +14,7 @@ export const ProductsList = ({data, isLoading,deleteProduct, mark, category}) =>
     return (
         <>
             <Col>
-            {
+            {   
                 (isLoading) ?   (<Spinner animation="border" />)
                             :   (
                                 <>
@@ -53,6 +53,7 @@ export const ProductsList = ({data, isLoading,deleteProduct, mark, category}) =>
                 value={value}
                 mark={mark}
                 category={category}
+                setIsUpdate={setIsUpdate}
             />: null }
             
         </>

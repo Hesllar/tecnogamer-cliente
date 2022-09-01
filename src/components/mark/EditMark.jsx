@@ -3,11 +3,10 @@ import { useEffect } from 'react'
 import {Modal,Form,Button} from 'react-bootstrap'
 import { useForm } from '../../hooks';
 
-
-export const EditCategory = ({isOpen,close,value, setIsUpdate}) => {
+export const EditMark = ({isOpen,close,value, setIsUpdate}) => {
 
   const {onInputChange, formState, onResetForm} = useForm({
-    nombreCategoria:value.nombreCategoria,
+    nombreMarca:value.nombreMarca,
  
   });
 
@@ -15,7 +14,7 @@ export const EditCategory = ({isOpen,close,value, setIsUpdate}) => {
     try {
       e.preventDefault();
       
-      await axios.put(`http://localhost:8000/api/v0/updatecateogry/${value._id}`, formState);
+      await axios.put(`http://localhost:8000/api/v0/updatemark/${value._id}`, formState);
       
       setIsUpdate(true);
       
@@ -39,17 +38,17 @@ export const EditCategory = ({isOpen,close,value, setIsUpdate}) => {
 
     <Modal show={isOpen} onHide={close}>
         <Modal.Header > 
-            <Modal.Title>Editar Categoría</Modal.Title>
+            <Modal.Title>Editar Marca</Modal.Title>
         </Modal.Header>
         <Form onSubmit={handleUpdate}>
           <Modal.Body>
                 <Form.Group>
-                  <Form.Label>Nombre Categoría</Form.Label>
+                  <Form.Label>Nombre Marca</Form.Label>
                   <Form.Control 
                     className="mt-1"
-                    placeholder="Nombre Categoría"
-                    name='nombreCategoria'
-                    value={formState.nombreCategoria}
+                    placeholder="Nombre Marca"
+                    name='nombreMarca'
+                    value={formState.nombreMarca}
                     onChange={onInputChange}
                     type="text"
                   />
@@ -57,7 +56,7 @@ export const EditCategory = ({isOpen,close,value, setIsUpdate}) => {
           </Modal.Body>
           <Modal.Footer >
               <Button  variant="secondary" onClick={close} >Cancelar</Button>
-              <Button type="submit" variant="primary">Actualizar Categoría </Button>
+              <Button type="submit" variant="primary">Actualizar Marca </Button>
           </Modal.Footer>
       </Form>
     </Modal>

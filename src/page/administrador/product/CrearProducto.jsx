@@ -13,7 +13,7 @@ export const CrearProducto = () => {
   //Lista de marcas
   const {mark} = useGetMarks();
 
-  const {data, isLoading, setProduct} = useGetProducts();
+  const {data, isLoading, setProduct, setIsUpdate} = useGetProducts();
 
   const newProduct = (products) =>{
     setProduct({
@@ -37,7 +37,14 @@ export const CrearProducto = () => {
     <Container className='regcontrainer'>
       <Row className='mt-2 mb-2'>
         <FormProduct category={category} mark={mark} newProduct={newProduct}/>
-        <ProductsList data={data} isLoading={isLoading} deleteProduct={deleteProduct} mark={mark} category={category}/>
+        <ProductsList 
+          data={data} 
+          isLoading={isLoading} 
+          deleteProduct={deleteProduct} 
+          mark={mark} 
+          category={category}
+          setIsUpdate={setIsUpdate}
+        />
       </Row>
     </Container >
   )

@@ -4,7 +4,7 @@ import { Form, Button, Col, Card, Row} from 'react-bootstrap';
 import { MarkList } from './MarkList';
 import { CategoryList } from '../category/CategoryList';
 import { useForm } from '../../hooks';
-import { Nav } from 'react-bootstrap';
+
 
 const URLPOST = 'http://localhost:8000/api/v0/registerproduct';
 
@@ -15,6 +15,8 @@ export const FormProduct = ({category,mark, newProduct}) => {
     stock:0,
     precio:'',
     descripcion:'',
+    categoriaId:'Seleccione',
+    marcaId:'Seleccione'
   });
 
   const handleSubmit = async(e) =>{
@@ -63,7 +65,7 @@ export const FormProduct = ({category,mark, newProduct}) => {
             <Form.Group as={Row} className="mb-3" >
               <Col sm="12">
                 <Form.Label>Categoria</Form.Label>
-                <Form.Select defaultValue={'Seleccione'} onChange={onInputChange} name="categoriaId">
+                <Form.Select onChange={onInputChange} name="categoriaId" value={formState.categoriaId}>
                   <option value='Seleccione' disabled> Seleccione </option>
                   {
                     category.map(c => (<CategoryList key={c._id} category={c}/>))
@@ -74,7 +76,7 @@ export const FormProduct = ({category,mark, newProduct}) => {
             <Form.Group as={Row} className="mb-3" >
               <Col sm="12">
                 <Form.Label>Marca</Form.Label>
-                <Form.Select defaultValue={'Seleccione'} onChange={onInputChange} name="marcaId">
+                <Form.Select onChange={onInputChange} name="marcaId" value={formState.marcaId}>
                   <option value="Seleccione" disabled> Seleccione </option>
                   {
                     mark.map(m => (<MarkList key={m._id} mark={m}/>))

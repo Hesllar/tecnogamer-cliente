@@ -5,7 +5,7 @@ import { useGetCategory } from '../../../hooks';
 
 export const CrearCategoria = () => {
 
-  const {category, setCategory} = useGetCategory();
+  const {category, setCategory,setIsUpdate} = useGetCategory();
 
   const addCate = (newCategory) =>{
     setCategory([...category, newCategory]);
@@ -20,7 +20,7 @@ export const CrearCategoria = () => {
     <Container className='regcontrainer'>
       <Row className='mt-2 mb-2'>
         <AddCategory addCate={addCate}/>
-        <CategoryListTable category={category} deleteCategory={deleteCategory}/>
+        <CategoryListTable category={category} deleteCategory={deleteCategory} setIsUpdate={setIsUpdate}/>
       </Row>
     </Container >
   )

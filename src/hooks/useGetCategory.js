@@ -7,6 +7,8 @@ export const useGetCategory = () => {
 
     const [category, setCategory] = useState([]);
 
+    const [isUpdate, setIsUpdate] = useState(false);
+
     const listCategory = async () => {
 
         const resCategory = await axios.get(urlCategoria);
@@ -20,8 +22,17 @@ export const useGetCategory = () => {
         listCategory();
     }, []);
 
+    useEffect(() => {
+        if(isUpdate){
+            listCategory();
+            setIsUpdate(false);
+        }
+    }, [isUpdate]);
+    
+
     return{
         category,
-        setCategory
+        setCategory,
+        setIsUpdate
     }
 }

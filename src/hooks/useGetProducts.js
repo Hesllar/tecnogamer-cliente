@@ -10,6 +10,8 @@ export const useGetProducts = () => {
         isLoading:true
     });
 
+    const [isUpdate, setIsUpdate] = useState(false);
+
     const listProduct = async () => {
 
         setProduct({
@@ -26,15 +28,24 @@ export const useGetProducts = () => {
             isLoading:false
         });
     }
+
     useEffect(() => {
         listProduct();
     }, []);
+
+    useEffect(() => {
+        if(isUpdate){
+            listProduct();
+            setIsUpdate(false);
+        }
+    }, [isUpdate]);
     
 
     return {
         data:product.data,
         isLoading:product.isLoading,
-        setProduct
+        setProduct,
+        setIsUpdate
     }
 ;
 }

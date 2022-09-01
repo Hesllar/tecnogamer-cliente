@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Row, Card, Button, Col  } from 'react-bootstrap';
+import { Container, Row, Col  } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import imagen3 from '../../img/home/imagen3.png';

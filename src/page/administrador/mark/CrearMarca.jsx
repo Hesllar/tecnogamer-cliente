@@ -5,7 +5,7 @@ import { useGetMarks } from '../../../hooks';
 
 export const CrearMarca = () => {
 
-    const {mark, setMarca} = useGetMarks();
+    const {mark, setMarca,setIsUpdate} = useGetMarks();
 
     const addMark = (newMark) =>{
         setMarca([...mark, newMark]);
@@ -19,7 +19,7 @@ export const CrearMarca = () => {
         <Container className='regcontrainer'>
             <Row className='mt-2 mb-2'>
                 <AddMark addMark={addMark}/>
-                <MarcaListTable mark={mark} deleteMark={deleteMark}/>
+                <MarcaListTable mark={mark} deleteMark={deleteMark} setIsUpdate={setIsUpdate}/>
             </Row>
         </Container >
     )
