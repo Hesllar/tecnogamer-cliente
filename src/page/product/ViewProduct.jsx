@@ -3,9 +3,7 @@ import { Container, Row, Col  } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import imagen3 from '../../img/home/imagen3.png';
-
-
-
+import {httpRequest} from '../../helpers/httpRequest';
 
 export const ViewProduct = () => {
   
@@ -14,7 +12,7 @@ export const ViewProduct = () => {
   const {id} = useParams();
 
   const detailProduct = async() =>{
-    const {data, status} = await axios.get(`http://localhost:8000/api/v0/oneproduct/${id}`);
+    const {data, status} = await httpRequest(`${import.meta.env.VITE_URL_GET_BY_PRODUCT}${id}`, 'GET');
     if(status === 200){
       return setDetail(data.Data);
     }

@@ -1,5 +1,5 @@
 import {Modal,Alert,Button} from 'react-bootstrap'
-import axios from 'axios'
+import {httpRequest} from '../../helpers/httpRequest';
 
 export const DeleteMark = ({isOpen,close,value,deleteMark}) => {
 
@@ -7,7 +7,7 @@ export const DeleteMark = ({isOpen,close,value,deleteMark}) => {
 
         try {
 
-            await axios.delete(`http://localhost:8000/api/v0/deletemark/${id}`);
+             await httpRequest(`${import.meta.env.VITE_URL_DELETE_MARK}${id}`,'DELETE');
 
             deleteMark(id);
 

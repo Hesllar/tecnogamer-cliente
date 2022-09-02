@@ -1,6 +1,6 @@
 
 import {Modal,Alert,Button} from 'react-bootstrap'
-import axios from 'axios';
+import {httpRequest} from '../../helpers/httpRequest';
 
 export const DeleteProduct = ({isOpen,close,value,deleteProduct}) => {
 
@@ -8,7 +8,7 @@ export const DeleteProduct = ({isOpen,close,value,deleteProduct}) => {
 
         try {
 
-            await axios.delete(`http://localhost:8000/api/v0/deleteproduct/${id}`);
+            await httpRequest(`${import.meta.env.VITE_URL_DELETE_PRODUCT}${id}`,'DELETE');
 
             deleteProduct(id);
 

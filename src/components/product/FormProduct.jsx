@@ -1,12 +1,9 @@
 import {Link} from 'react-router-dom';
-import axios from 'axios';
 import { Form, Button, Col, Card, Row} from 'react-bootstrap';
 import { MarkList } from './MarkList';
 import { CategoryList } from '../category/CategoryList';
 import { useForm } from '../../hooks';
-
-
-const URLPOST = 'http://localhost:8000/api/v0/registerproduct';
+import { httpRequest } from '../../helpers/httpRequest';
 
 export const FormProduct = ({category,mark, newProduct}) => {
 
@@ -23,7 +20,7 @@ export const FormProduct = ({category,mark, newProduct}) => {
     try {
       e.preventDefault();
 
-      const {data} = await axios.post(URLPOST,formState);
+      const {data} = await httpRequest(import.meta.env.VITE_URL_CREATE_PRODUCT,'CREATE',formState);
 
       newProduct(data.Data);
 

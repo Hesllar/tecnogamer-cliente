@@ -1,9 +1,7 @@
 import {Link} from 'react-router-dom';
-import axios from 'axios';
 import { Form, Button, Col, Card, Row} from 'react-bootstrap';
 import { useForm } from '../../hooks';
-
-const URLPOST = 'http://localhost:8000/api/v0/categoryregister';
+import {httpRequest} from '../../helpers/httpRequest';
 
 export const AddCategory = ({addCate}) => {
 
@@ -15,7 +13,7 @@ export const AddCategory = ({addCate}) => {
     try {
       e.preventDefault();
 
-      const {data} = await axios.post(URLPOST,formState);
+      const {data} = await httpRequest(import.meta.env.VITE_URL_CREATE_CATEGORY,'CREATE',formState);
 
       addCate(data.Data);
 

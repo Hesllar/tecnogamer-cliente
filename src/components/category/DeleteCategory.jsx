@@ -1,15 +1,13 @@
-import { useEffect } from 'react'
 import {Modal,Alert,Button} from 'react-bootstrap'
-import axios from 'axios';
+import {httpRequest} from '../../helpers/httpRequest';
 
 export const DeleteCategory = ({isOpen,close,value,deleteCategory}) => {
-
   
     const handleDelete = async(id) =>{
 
         try {
 
-            await axios.delete(`http://localhost:8000/api/v0/deletecategory/${id}`);
+            await httpRequest(`${import.meta.env.VITE_URL_DELETE_CATEGORY}${id}`,'DELETE');
 
             deleteCategory(id);
 
@@ -23,11 +21,6 @@ export const DeleteCategory = ({isOpen,close,value,deleteCategory}) => {
         
     }
 
-    useEffect(()=>{
-        if(!isOpen){
-            
-        }
-    },[isOpen]);
 
     return (
 

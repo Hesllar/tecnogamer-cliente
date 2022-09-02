@@ -1,8 +1,7 @@
-import axios from 'axios';
 import { useEffect } from 'react'
 import {Modal,Form,Button} from 'react-bootstrap'
 import { useForm } from '../../hooks';
-
+import {httpRequest} from '../../helpers/httpRequest';
 
 export const EditCategory = ({isOpen,close,value, setIsUpdate}) => {
 
@@ -15,7 +14,7 @@ export const EditCategory = ({isOpen,close,value, setIsUpdate}) => {
     try {
       e.preventDefault();
       
-      await axios.put(`http://localhost:8000/api/v0/updatecateogry/${value._id}`, formState);
+      await httpRequest(`${import.meta.env.VITE_URL_UPDATE_CATEGORY}${value._id}`,'UPDATE',formState);
       
       setIsUpdate(true);
       

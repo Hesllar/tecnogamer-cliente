@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios';
-const urlCategoria = 'http://localhost:8000/api/v0/allcategory';
-
+import { useState, useEffect } from 'react';
+import {httpRequest} from '../helpers/httpRequest';
 
 export const useGetCategory = () => {
 
@@ -11,7 +9,7 @@ export const useGetCategory = () => {
 
     const listCategory = async () => {
 
-        const resCategory = await axios.get(urlCategoria);
+        const resCategory = await httpRequest(import.meta.env.VITE_URL_ALL_CATEGORIES, 'GET');
         
         const { Data } = resCategory.data;
 

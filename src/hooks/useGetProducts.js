@@ -1,7 +1,5 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
-
-const URL = 'http://localhost:8000/api/v0/allproduct';
+import {httpRequest} from '../helpers/httpRequest';
 
 export const useGetProducts = () => {
     
@@ -19,7 +17,7 @@ export const useGetProducts = () => {
             isLoading:true
         });
 
-        const res = await axios.get(URL);
+        const res = await httpRequest(import.meta.env.VITE_URL_ALL_PRODUCTS,'GET');
 
         const { Data } = res.data;
 

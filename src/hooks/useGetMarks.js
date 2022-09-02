@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios';
-const urlMarca = 'http://localhost:8000/api/v0/allmark';
+import {httpRequest} from '../helpers/httpRequest';
 
 export const useGetMarks = () => {
     const [mark, setMarca] = useState([]);
@@ -8,8 +7,8 @@ export const useGetMarks = () => {
     const [isUpdate, setIsUpdate] = useState(false);
 
     const listMark = async () => {
-
-        const resMark = await axios.get(urlMarca);
+       
+        const resMark = await httpRequest(import.meta.env.VITE_URL_ALL_MARKS,'GET');
 
         const { Data } = resMark.data;
 

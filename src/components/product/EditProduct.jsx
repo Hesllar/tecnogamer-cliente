@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import {Modal,Form,Button,Col,Card,Row} from 'react-bootstrap'
-import axios from 'axios';
 import { useForm } from '../../hooks';
 import { CategoryList } from '../category/CategoryList';
 import { MarkList } from './MarkList';
+import {httpRequest} from '../../helpers/httpRequest';
 
 export const EditProduct = ({isOpen,close,value,mark,category, setIsUpdate}) => {
 
@@ -26,7 +26,7 @@ export const EditProduct = ({isOpen,close,value,mark,category, setIsUpdate}) => 
 
         e.preventDefault();
 
-        await axios.put(`http://localhost:8000/api/v0/updateproduct/${value._id}`, formState);
+        await httpRequest(`${import.meta.env.VITE_URL_UPDATE_PRODUCT}${value._id}`,'UPDATE',formState);
 
         setIsUpdate(true);
 
