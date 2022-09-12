@@ -1,6 +1,7 @@
 
 import {Modal,Alert,Button} from 'react-bootstrap'
-import {httpRequest} from '../../helpers/httpRequest';
+import { ToastContainer } from 'react-toastify';
+import {httpRequest, toast} from '../../helpers';
 
 export const DeleteProduct = ({isOpen,close,value,deleteProduct}) => {
 
@@ -8,15 +9,28 @@ export const DeleteProduct = ({isOpen,close,value,deleteProduct}) => {
 
         try {
 
-            await httpRequest(`${import.meta.env.VITE_URL_DELETE_PRODUCT}${id}`,'DELETE');
+            const resp = await httpRequest(`${import.meta.env.VITE_URL_DELETE_PRODUCT}${id}`,'DELETE');
+
+            if(resp.status !== 200){
+
+                const {data} =  resp.response;
+
+                close();
+
+                toast('error',data.message || 'Error no controlado');
+            }
+
+            const {message} = resp.data;
 
             deleteProduct(id);
 
             close();
+
+            toast('success',message);
             
         } catch (error) {
 
-            console.log(error);
+            toast('error',error);
 
         }
         
@@ -39,6 +53,7 @@ export const DeleteProduct = ({isOpen,close,value,deleteProduct}) => {
                 <Button variant="secondary" onClick={close} >Cancelar</Button>
                 <Button variant="danger" onClick={() =>{handleDelete(value)}} >Eliminar Producto</Button>
             </Modal.Footer>
+            <ToastContainer />
         </Modal>
         
     )

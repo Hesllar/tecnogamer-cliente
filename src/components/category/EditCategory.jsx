@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
 import {Modal,Form,Button} from 'react-bootstrap'
+import { ToastContainer } from 'react-toastify';
+import {httpRequest, toast} from '../../helpers';
 import { useForm } from '../../hooks';
-import {httpRequest} from '../../helpers/httpRequest';
 
 export const EditCategory = ({isOpen,close,value, setIsUpdate}) => {
 
@@ -14,13 +15,28 @@ export const EditCategory = ({isOpen,close,value, setIsUpdate}) => {
     try {
       e.preventDefault();
       
-      await httpRequest(`${import.meta.env.VITE_URL_UPDATE_CATEGORY}${value._id}`,'UPDATE',formState);
+      const resp = await httpRequest(`${import.meta.env.VITE_URL_UPDATE_CATEGORY}${value._id}`,'UPDATE',formState);
       
+      if(resp.status !== 200){
+
+        const {data} =  resp.response;
+        
+        toast('error',data.message || 'Error no controlado');
+
+      }
+
+      const {message} = resp.data;
+
       setIsUpdate(true);
       
       close();
+
+      toast('success', message);
+
     } catch (error) {
-      console.log(error)
+
+      toast('error', error);
+      
     }
     
     
@@ -59,6 +75,7 @@ export const EditCategory = ({isOpen,close,value, setIsUpdate}) => {
               <Button type="submit" variant="primary">Actualizar Categoría </Button>
           </Modal.Footer>
       </Form>
+      <ToastContainer />
     </Modal>
     
   )

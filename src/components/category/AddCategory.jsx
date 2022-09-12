@@ -1,30 +1,48 @@
 import {Link} from 'react-router-dom';
 import { Form, Button, Col, Card, Row} from 'react-bootstrap';
+import { ToastContainer } from 'react-toastify';
 import { useForm } from '../../hooks';
-import {httpRequest} from '../../helpers/httpRequest';
+import {httpRequest, toast} from '../../helpers';
 
 export const AddCategory = ({addCate}) => {
+
 
     const {onInputChange, formState, onResetForm} = useForm({
         nombreCategoria:''
     });
 
+    
+
     const handleSubmit = async(e) =>{
     try {
       e.preventDefault();
 
-      const {data} = await httpRequest(import.meta.env.VITE_URL_CREATE_CATEGORY,'CREATE',formState);
+      const resp = await httpRequest(import.meta.env.VITE_URL_CREATE_CATEGORY,'CREATE',formState);
+
+      if(resp.status !== 200){
+        const {data} =  resp.response;
+        
+        toast('error',data.message || 'Error no controlado');
+
+        onResetForm();
+      }
+
+      const {data} = resp;
 
       addCate(data.Data);
 
       onResetForm();
-      
+
+      toast('success',data.message);
+
     } catch (error) {
 
-      console.log(error)
+      toast('error',error);
+      
     }
    
   }
+
 
   return (
     <Col>
@@ -44,6 +62,8 @@ export const AddCategory = ({addCate}) => {
             </Form.Group>
           </Form>
         </Card>
+        <ToastContainer />
       </Col>
+      
   )
 }

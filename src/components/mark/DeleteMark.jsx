@@ -1,5 +1,6 @@
 import {Modal,Alert,Button} from 'react-bootstrap'
-import {httpRequest} from '../../helpers/httpRequest';
+import { ToastContainer } from 'react-toastify';
+import {httpRequest, toast} from '../../helpers';
 
 export const DeleteMark = ({isOpen,close,value,deleteMark}) => {
 
@@ -7,15 +8,28 @@ export const DeleteMark = ({isOpen,close,value,deleteMark}) => {
 
         try {
 
-             await httpRequest(`${import.meta.env.VITE_URL_DELETE_MARK}${id}`,'DELETE');
+            const resp = await httpRequest(`${import.meta.env.VITE_URL_DELETE_MARK}${id}`,'DELETE');
+
+            if(resp.status !== 200){
+
+                const {data} =  resp.response;
+
+                close();
+
+                toast('error',data.message || 'Error no controlado');
+            }
+
+            const {message} = resp.data;
 
             deleteMark(id);
 
             close();
+
+            toast('success',message);
             
         } catch (error) {
 
-            console.log(error);
+            toast('success',error);
 
         }
         
@@ -38,6 +52,7 @@ export const DeleteMark = ({isOpen,close,value,deleteMark}) => {
                 <Button variant="secondary" onClick={close} >Cancelar</Button>
                 <Button variant="danger" onClick={() =>{handleDelete(value)}} >Eliminar Marca</Button>
             </Modal.Footer>
+            <ToastContainer />
         </Modal>
     )
 }

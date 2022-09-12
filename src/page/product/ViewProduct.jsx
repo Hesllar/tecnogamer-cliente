@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col  } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import imagen3 from '../../img/home/imagen3.png';
 import {httpRequest} from '../../helpers/httpRequest';
 
 export const ViewProduct = () => {
@@ -24,13 +22,14 @@ export const ViewProduct = () => {
     detailProduct();
   }, [])
   
+
   return (
     <Container>
       <Row>
         <Col>
           <div className="card">
             <div className="card-body">
-              <img className="d-block w-100" src={imagen3} alt="IMG" />
+              <img className="d-block w-100" src={ detail.img ? `http://localhost:8000/${detail.img}` : ''} alt="IMG" />
             </div>
           </div>
         </Col>

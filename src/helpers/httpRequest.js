@@ -9,21 +9,21 @@ export const httpRequest = async(url = '',accion = 'GET', body = {}) => {
                 
             case 'CREATE':
 
-                return await axios.post(url,body,{headers:{'x-access-token':"TOKEN",'Content-Type': 'application/json'}});
+                return await axios.post(url,body,{headers:{'x-access-token':'TOKEN','Content-Type': 'application/json','Accept': 'multipart/form-data'}});
               
             case 'UPDATE':
         
-                return await axios.put(url,body,{headers:{'x-access-token':"TOKEN",'Content-Type': 'application/json'}});
+                return await axios.put(url,body,{headers:{'x-access-token':'TOKEN','Content-Type': 'application/json','Accept': 'multipart/form-data'}});
 
             case 'DELETE':
                 
-                return await axios.delete(url,{headers:{'x-access-token':"TOKEN"}});
+                return await axios.delete(url,{headers:{'x-access-token':'TOKEN'}});
         
             default:
 
                 return await axios.get(url);
         }
     } catch (error) {
-        console.log(error)
+        return error
     }
 }

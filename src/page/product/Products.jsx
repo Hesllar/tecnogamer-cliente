@@ -23,7 +23,7 @@ export const Products = () => {
                                                             <Card.Title> {pro.nombreProducto}</Card.Title>
                                                             <strong >STOCK:<label className='fw-normal'>{pro.stock}</label></strong>
                                                         </Card.Body>
-                                                        <Card.Img variant="top" src="holder.js/100px180" />
+                                                        <Card.Img variant="top" src={`http://localhost:8000/${pro.img}`} />
                                                         <Card.Body>
                                                             <label>${pro.precio}</label>
                                                         </Card.Body>

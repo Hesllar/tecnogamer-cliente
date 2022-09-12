@@ -1,9 +1,11 @@
+import { useRef } from 'react';
 import {Link} from 'react-router-dom';
 import { Form, Button, Col, Card, Row} from 'react-bootstrap';
+import { ToastContainer } from 'react-toastify';
 import { MarkList } from './MarkList';
 import { CategoryList } from '../category/CategoryList';
 import { useForm } from '../../hooks';
-import { httpRequest } from '../../helpers/httpRequest';
+import { httpRequest, toast } from '../../helpers';
 
 export const FormProduct = ({category,mark, newProduct}) => {
 
@@ -13,22 +15,45 @@ export const FormProduct = ({category,mark, newProduct}) => {
     precio:'',
     descripcion:'',
     categoriaId:'Seleccione',
-    marcaId:'Seleccione'
+    marcaId:'Seleccione',
+    img:''
   });
+
+  const img = useRef();
 
   const handleSubmit = async(e) =>{
     try {
       e.preventDefault();
 
-      const {data} = await httpRequest(import.meta.env.VITE_URL_CREATE_PRODUCT,'CREATE',formState);
+      const formData = new FormData();
+
+      formData.append('img', img.current.files[0]);
+
+      for (const iterator in formState) {
+        formData.append(iterator, formState[iterator]);
+      }
+
+      const resp = await httpRequest(import.meta.env.VITE_URL_CREATE_PRODUCT,'CREATE',formData);
+      
+      if(resp.status !== 200){
+        const {data} =  resp.response;
+        
+        toast('error',data.message || 'Error no controlado');
+
+        onResetForm();
+      }
+
+      const {data} = resp;
 
       newProduct(data.Data);
 
       onResetForm();
+
+      toast('success',data.message);
       
     } catch (error) {
 
-      console.log(error)
+      toast('error',error);
     }
    
   }
@@ -81,6 +106,12 @@ export const FormProduct = ({category,mark, newProduct}) => {
                 </Form.Select>
               </Col>
             </Form.Group>
+            <Form.Group as={Row} className="mb-3" >
+              <Col sm="12">
+                <Form.Label>Imagen</Form.Label>
+                <Form.Control type='file' onChange={onInputChange} name="img" ref={img} value={formState.img} />
+              </Col>
+            </Form.Group>
             <Form.Group >
               <Button type="submit" className="RegisterBoton mt-2" variant="success"  >Registrar Producto</Button>
               <Link to="/" className="linkInicio"><Button  className="RegisterBoton mt-2 " style={{marginLeft: "10px"}} variant="warning" >Cancelar</Button></Link>
@@ -88,6 +119,7 @@ export const FormProduct = ({category,mark, newProduct}) => {
     
           </Form>
         </Card>
+        <ToastContainer />
       </Col>
     
   )

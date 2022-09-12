@@ -1,12 +1,14 @@
-import { useEffect } from 'react'
-import {Modal,Form,Button,Col,Card,Row} from 'react-bootstrap'
+import { useEffect, useRef } from 'react';
+import {Modal,Form,Button,Col,Card,Row} from 'react-bootstrap';
+import { ToastContainer } from 'react-toastify';
 import { useForm } from '../../hooks';
 import { CategoryList } from '../category/CategoryList';
 import { MarkList } from './MarkList';
-import {httpRequest} from '../../helpers/httpRequest';
+import {httpRequest, toast} from '../../helpers';
 
 export const EditProduct = ({isOpen,close,value,mark,category, setIsUpdate}) => {
 
+    console.log(value)
     const {onInputChange,formState,onResetForm} = useForm({
         nombreProducto:value.nombreProducto,
         stock:value.stock,
@@ -14,7 +16,10 @@ export const EditProduct = ({isOpen,close,value,mark,category, setIsUpdate}) => 
         descripcion:value.descripcion,
         categoriaId:value.categoriaId[0]._id,
         marcaId:value.marcaId[0]._id,
+        img:value.img
     });    
+
+    const img = useRef();
 
     useEffect(()=>{
         if(!isOpen){
@@ -23,14 +28,40 @@ export const EditProduct = ({isOpen,close,value,mark,category, setIsUpdate}) => 
     },[isOpen])
 
     const handleUpdate = async(e) => {
+        try {
+            e.preventDefault();
 
-        e.preventDefault();
+            const formData = new FormData();
 
-        await httpRequest(`${import.meta.env.VITE_URL_UPDATE_PRODUCT}${value._id}`,'UPDATE',formState);
+            formData.append('img', img.current.files[0]);
 
-        setIsUpdate(true);
+            for (const iterator in formState) {
+                formData.append(iterator, formState[iterator]);
+            }
+            
+            const resp = await httpRequest(`${import.meta.env.VITE_URL_UPDATE_PRODUCT}${value._id}`,'UPDATE',formData);
 
-        close();
+            if(resp.status !== 200){
+
+            const {data} =  resp.response;
+            
+            toast('error',data.message || 'Error no controlado');
+
+            }
+    
+            const {message} = resp.data;
+
+            setIsUpdate(true);
+        
+            close();
+
+            toast('success', message);
+
+        } catch (error) {
+
+            toast('error', error);
+
+        }
     }
 
     return (
@@ -112,6 +143,17 @@ export const EditProduct = ({isOpen,close,value,mark,category, setIsUpdate}) => 
                                 }
                             </Form.Select>
                         </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3" >
+                            <Col sm="12">
+                                <Form.Label>Imagen</Form.Label>
+                                <Form.Control 
+                                    type='file' 
+                                    onChange={onInputChange} 
+                                    name="img" 
+                                    ref={img}
+                                />
+                            </Col>
                         </Form.Group> 
                         <Form.Group >
                             <Button  type="submit" className="RegisterBoton mt-2" variant="success"  >Actualizar Producto</Button>
@@ -119,6 +161,7 @@ export const EditProduct = ({isOpen,close,value,mark,category, setIsUpdate}) => 
                     </Form>
                 </Card>
             </Col>
+            <ToastContainer />
         </Modal>
         
     )
