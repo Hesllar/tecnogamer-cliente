@@ -25,6 +25,8 @@ export const AddCategory = ({addCate}) => {
         toast('error',data.message || 'Error no controlado');
 
         onResetForm();
+
+        return;
       }
 
       const {data} = resp;

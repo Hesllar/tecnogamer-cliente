@@ -23,6 +23,7 @@ export const EditCategory = ({isOpen,close,value, setIsUpdate}) => {
         
         toast('error',data.message || 'Error no controlado');
 
+        return;
       }
 
       const {message} = resp.data;

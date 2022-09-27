@@ -8,8 +8,8 @@ export const httpRequest = async(url = '',accion = 'GET', body = {}) => {
                 return await axios.get(url);
                 
             case 'CREATE':
-
-                return await axios.post(url,body,{headers:{'x-access-token':'TOKEN','Content-Type': 'application/json','Accept': 'multipart/form-data'}});
+                
+                return await axios.post(url,body,{headers:{'x-access-token':'TOKEN','Content-Type': 'application/json'}});
               
             case 'UPDATE':
         
