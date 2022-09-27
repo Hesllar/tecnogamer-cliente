@@ -26,18 +26,23 @@ export const FormProduct = ({ category, mark, newProduct }) => {
     try {
       e.preventDefault();
 
-      // const formData = new FormData();
-
-      // formData.append('img', img.current.files[0]);
-
-      //const imgName = await axios.post('http://localhost:8000/api/v0/upload', formData, { headers: { 'x-access-token': 'TOKEN', 'Content-Type': 'multipart/form-data' } });
-
-      //const { Data: imgFile } = imgName.data;
 
       const img64 = await converBase64(img.current.files[0]);
 
-      console.log(img64)
-      //formState.img = imgFile;
+      const imgName = await httpRequest(import.meta.env.VITE_URL_UPLOAD, 'CREATE', { img64 });
+
+      if (imgName.status !== 200) {
+        const { data } = imgName.response;
+
+        toast('error', data.message || 'Error no controlado');
+
+        return;
+      }
+      const { Data } = imgName.data;
+
+      formState.img = Data.bas64;
+
+      formState.extension = Data.extension;
 
       const resp = await httpRequest(import.meta.env.VITE_URL_CREATE_PRODUCT, 'CREATE', formState);
 
@@ -69,9 +74,14 @@ export const FormProduct = ({ category, mark, newProduct }) => {
   const converBase64 = async (file) => {
     return new Promise((resolve, reject) => {
 
+      let fileReade = new FileReader();
+
       fileReade.readAsDataURL(file);
+
       fileReade.onload = (() => {
-        resolve(fileReade.result)
+        // const type = fileReade.result.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+        const type = fileReade.result;
+        resolve(type)
       });
       fileReade.onerror = ((error) => {
         reject(error)
@@ -129,7 +139,7 @@ export const FormProduct = ({ category, mark, newProduct }) => {
           <Form.Group as={Row} className="mb-3" >
             <Col sm="12">
               <Form.Label>Imagen</Form.Label>
-              <Form.Control type='file' onChange={onInputChange} name="img" ref={img} value={formState.img} />
+              <Form.Control type='file' onChange={onInputChange} name="img" ref={img} value={formState.img} accept="image/jpeg, image/png, image/jpg" />
             </Col>
           </Form.Group>
           <Form.Group >
