@@ -3,8 +3,33 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { routes } from '../../routes/config-route';
 import logo from '../../img/tecnogamelogo.png'
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
+import { useEffect } from 'react';
 
 export const Header = () => {
+
+  let rolUser = 1;
+
+  const { user, setUser } = useContext(UserContext);
+
+  if (user.userData) {
+
+    rolUser = user.userData.rol;
+
+  }
+  const logout = () => {
+
+    localStorage.clear();
+
+    setUser({
+      logged: false
+    });
+  }
+  useEffect(() => {
+
+  }, [user.logged])
+
   return (
 
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -19,14 +44,17 @@ export const Header = () => {
         <Nav className="mr-auto">
           <Nav.Link as={NavLink} to={routes.home} >Inicio</Nav.Link>
           <Nav.Link as={NavLink} to={routes.products}>Productos</Nav.Link>
-          <NavDropdown
-            id="nav-dropdown-dark-example"
-            menuVariant="dark"
-            title='Administrador'>
-            <NavDropdown.Item as={NavLink} to={routes.addCategory} >Agregar Categorias</NavDropdown.Item>
-            <NavDropdown.Item as={NavLink} to={routes.addMark} >Agregar Marcas</NavDropdown.Item>
-            <NavDropdown.Item as={NavLink} to={routes.addProduct} >Agregar Productos</NavDropdown.Item>
-          </NavDropdown>
+          {(user.logged && rolUser == 2) ?
+            <NavDropdown
+              id="nav-dropdown-dark-example"
+              menuVariant="dark"
+              title='Administrador'>
+              <NavDropdown.Item as={NavLink} to={`/admin${routes.addCategory}`} >Agregar Categorias</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to={`/admin${routes.addMark}`} >Agregar Marcas</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to={`/admin${routes.addProduct}`} >Agregar Productos</NavDropdown.Item>
+            </NavDropdown>
+            : ''
+          }
           <NavDropdown
             id="nav-dropdown-dark-example"
             menuVariant="dark"
@@ -36,11 +64,14 @@ export const Header = () => {
             <NavDropdown.Item left as={NavLink} to={routes.memoria} >Memoria</NavDropdown.Item>
           </NavDropdown>
         </Nav>
+        {(user.logged) ? <h4 className='text-muted'>{`Hola ${user.userData.nombre} ${user.userData.apellido}`}</h4> : ''}
         <Nav>
-          <Nav.Link as={NavLink} to={routes.login} >Iniciar Sesion</Nav.Link>
-          <Nav.Link as={NavLink} to={routes.register} >Registrarse</Nav.Link>
-          <Nav.Link  >Cerrar Sesion</Nav.Link>
+          {(!user.logged) ? <Nav.Link as={NavLink} to={routes.login} >Iniciar Sesion</Nav.Link> : ''}
+          {(!user.logged) ? <Nav.Link as={NavLink} to={routes.register} >Registrarse</Nav.Link> : ''}
+          {(user.logged) ? <Nav.Link onClick={logout} >Cerrar Sesion</Nav.Link> : ''}
         </Nav>
+
+
       </Navbar.Collapse>
     </Navbar>
   )

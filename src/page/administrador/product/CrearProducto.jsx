@@ -1,6 +1,6 @@
 
 
-import { Row, Container,Col } from 'react-bootstrap';
+import { Row, Container } from 'react-bootstrap';
 import { FormProduct } from '../../../components/product/FormProduct';
 import { ProductsList } from '../../../components/product/ProductsList';
 import { useGetCategory, useGetMarks, useGetProducts } from '../../../hooks';

@@ -1,14 +1,14 @@
 export const routes = {
-    home:'/',
-    products:'/products',
-    addProduct:'/addProduct',
-    viewProduct:'/viewProduct',
-    memoria:'/memoria',
-    mouseTeclado:'/mouseyteclado',
-    gabinete:'/gabinete',
-    login:'/login',
-    register:'/register',
-    addCategory:'/addCategory',
-    addMark:'/addMark'
+    home: '/',
+    products: '/products',
+    addProduct: '/addProduct',
+    viewProduct: '/viewProduct',
+    memoria: '/memoria',
+    mouseTeclado: '/mouseyteclado',
+    gabinete: '/gabinete',
+    login: '/login',
+    register: '/register',
+    addCategory: '/addCategory',
+    addMark: '/addMark'
 }
 

@@ -43,10 +43,11 @@ export const EditProduct = ({isOpen,close,value,mark,category, setIsUpdate}) => 
 
             if(resp.status !== 200){
 
-            const {data} =  resp.response;
-            
-            toast('error',data.message || 'Error no controlado');
-
+                const {data} =  resp.response;
+                
+                toast('error',data.message || 'Error no controlado');
+                
+                return;
             }
     
             const {message} = resp.data;

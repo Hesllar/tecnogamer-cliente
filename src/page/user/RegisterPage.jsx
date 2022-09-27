@@ -1,11 +1,13 @@
-
+import { Row, Container } from 'react-bootstrap';
+import {Register} from '../../components/user';
 export const RegisterPage = () => {
   
     return (
-      <>
-          <h1>register</h1>
-      </>
-      
-    )
+      <Container className='regcontrainer'>
+        <Row className='mt-2 mb-2'>
+          <Register />
+        </Row>
+      </Container >
+)
   }
   

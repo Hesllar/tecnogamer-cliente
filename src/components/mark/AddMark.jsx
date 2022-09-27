@@ -25,6 +25,7 @@ export const AddMark = ({addMark}) => {
 
         onResetForm();
 
+        return;
       }
 
       const {data} = resp;
