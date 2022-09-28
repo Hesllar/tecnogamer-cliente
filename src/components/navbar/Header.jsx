@@ -52,6 +52,7 @@ export const Header = () => {
               <NavDropdown.Item as={NavLink} to={`/admin${routes.addCategory}`} >Agregar Categorias</NavDropdown.Item>
               <NavDropdown.Item as={NavLink} to={`/admin${routes.addMark}`} >Agregar Marcas</NavDropdown.Item>
               <NavDropdown.Item as={NavLink} to={`/admin${routes.addProduct}`} >Agregar Productos</NavDropdown.Item>
+              <NavDropdown.Item as={NavLink} to={`/admin${routes.userAdmin}`} >Administrador de Usuario</NavDropdown.Item>
             </NavDropdown>
             : ''
           }
@@ -61,7 +62,7 @@ export const Header = () => {
             title='Categoria'>
             <NavDropdown.Item as={NavLink} to={routes.mouseTeclado} >Mouse y Teclados</NavDropdown.Item>
             <NavDropdown.Item as={NavLink} to={routes.gabinete} >Gabinetes</NavDropdown.Item>
-            <NavDropdown.Item left as={NavLink} to={routes.memoria} >Memoria</NavDropdown.Item>
+            <NavDropdown.Item as={NavLink} to={routes.memoria} >Memoria</NavDropdown.Item>
           </NavDropdown>
         </Nav>
         {(user.logged) ? <h4 className='text-muted'>{`Hola ${user.userData.nombre} ${user.userData.apellido}`}</h4> : ''}

@@ -39,7 +39,7 @@ export const Register = () => {
 
       toast('success', `${data.message}, su nombre usuario ha sido enviado al correo registrado`);
 
-      await httpRequest(import.meta.env.VITE_URL_EMAIL, 'CREATE', { correo: formState.correo });
+      // await httpRequest(import.meta.env.VITE_URL_EMAIL, 'CREATE', { correo: formState.correo });
 
       setTimeout(() => {
 

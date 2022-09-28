@@ -18,6 +18,7 @@ import { Header } from '../components/navbar/Header';
 import { Footer } from '../components/navbar/Footer';
 import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
+import { UserAdminSetting } from '../page/administrador/userSetting/UserAdminSetting';
 
 export const AppRouter = () => {
   return (
@@ -64,6 +65,8 @@ export const AppRouter = () => {
 
               {/* Rutas Marca */}
               <Route path={routes.addMark} element={<CrearMarca />} />
+              {/* ruta admin user */}
+              <Route path={routes.userAdmin} element={<UserAdminSetting />} />
 
             </Routes>
           </PrivateRoute>
