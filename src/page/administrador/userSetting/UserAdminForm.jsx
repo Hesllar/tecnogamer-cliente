@@ -4,7 +4,7 @@ import { useForm } from '../../../hooks';
 import { ToastContainer } from 'react-toastify';
 import { httpRequest, toast } from '../../../helpers';
 
-export const UserAdminForm = () => {
+export const UserAdminForm = ({newUser}) => {
 
     const { onInputChange, formState, onResetForm  } = useForm({
         nombre: '',
@@ -13,7 +13,7 @@ export const UserAdminForm = () => {
         rut: '',
         fono: '',
         contrasena: '',
-        tipoUsuario: '',
+        tipoUsuario: 'Seleccione',
       });
 
     const handleSubmit = async (e) => {
@@ -30,13 +30,15 @@ export const UserAdminForm = () => {
             }
         
             const { data } = resp;
-        
+
+            newUser(data.Data)
+
             toast('success', `${data.message}, su nombre usuario ha sido enviado al correo registrado`);
-        
+            onResetForm()
+            
             // await httpRequest(import.meta.env.VITE_URL_EMAIL, 'CREATE', { correo: formState.correo });
         
             setTimeout(() => {
-
                 // resetear form 
                 
             }, 2600);
@@ -76,7 +78,7 @@ export const UserAdminForm = () => {
           <Form.Group as={Row} className="mb-3" >
             <Col sm="12">
               <Form.Select onChange={onInputChange} name="tipoUsuario" value={formState.tipoUsuario}>
-                <option value="Seleccione" disabled > Seleccione Tipo de Usuario </option>
+                <option value="Seleccione" disabled  > Seleccione Tipo de Usuario </option>
                 <option value="1" > Cliente </option>
                 <option value="2" > Administrador </option>
                
