@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import {httpRequest} from '../helpers/httpRequest';
+import { httpRequest } from '../helpers/httpRequest';
 
 export const useGetProducts = () => {
-    
+
     const [product, setProduct] = useState({
-        data:null, 
-        isLoading:true
+        data: null,
+        isLoading: true
     });
 
     const [isUpdate, setIsUpdate] = useState(false);
@@ -13,17 +13,17 @@ export const useGetProducts = () => {
     const listProduct = async () => {
 
         setProduct({
-            ...product, 
-            isLoading:true
+            ...product,
+            isLoading: true
         });
 
-        const res = await httpRequest(import.meta.env.VITE_URL_ALL_PRODUCTS,'GET');
+        const res = await httpRequest(import.meta.env.VITE_URL_ALL_PRODUCTS, 'GET');
 
         const { Data } = res.data;
 
         setProduct({
-            data:Data, 
-            isLoading:false
+            data: Data,
+            isLoading: false
         });
     }
 
@@ -32,18 +32,18 @@ export const useGetProducts = () => {
     }, []);
 
     useEffect(() => {
-        if(isUpdate){
+        if (isUpdate) {
             listProduct();
             setIsUpdate(false);
         }
     }, [isUpdate]);
-    
+
 
     return {
-        data:product.data,
-        isLoading:product.isLoading,
+        data: product.data,
+        isLoading: product.isLoading,
         setProduct,
         setIsUpdate
     }
-;
+        ;
 }

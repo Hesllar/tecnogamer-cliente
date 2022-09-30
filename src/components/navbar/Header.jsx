@@ -6,6 +6,7 @@ import logo from '../../img/tecnogamelogo.png'
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 import { useEffect } from 'react';
+import { ListCart } from '../cart/ListCart';
 
 export const Header = () => {
 
@@ -18,17 +19,20 @@ export const Header = () => {
     rolUser = user.userData.rol;
 
   }
+
   const logout = () => {
 
-    localStorage.clear();
+    localStorage.removeItem('user');
 
     setUser({
       logged: false
     });
   }
+
   useEffect(() => {
 
-  }, [user.logged])
+  }, [user.logged]);
+
 
   return (
 
@@ -64,9 +68,11 @@ export const Header = () => {
             <NavDropdown.Item as={NavLink} to={routes.gabinete} >Gabinetes</NavDropdown.Item>
             <NavDropdown.Item as={NavLink} to={routes.memoria} >Memoria</NavDropdown.Item>
           </NavDropdown>
+          <ListCart />
         </Nav>
         {(user.logged) ? <h4 className='text-muted'>{`Hola ${user.userData.nombre} ${user.userData.apellido}`}</h4> : ''}
         <Nav>
+
           {(!user.logged) ? <Nav.Link as={NavLink} to={routes.login} >Iniciar Sesion</Nav.Link> : ''}
           {(!user.logged) ? <Nav.Link as={NavLink} to={routes.register} >Registrarse</Nav.Link> : ''}
           {(user.logged) ? <Nav.Link onClick={logout} >Cerrar Sesion</Nav.Link> : ''}
@@ -74,6 +80,6 @@ export const Header = () => {
 
 
       </Navbar.Collapse>
-    </Navbar>
+    </Navbar >
   )
 }

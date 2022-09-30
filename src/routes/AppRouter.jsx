@@ -19,61 +19,64 @@ import { Footer } from '../components/navbar/Footer';
 import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
 import { UserAdminSetting } from '../page/administrador/userSetting/UserAdminSetting';
+import { ProductProvider } from '../context/ProductProvider';
 
 export const AppRouter = () => {
   return (
     <UserProvider>
-      <Header />
-      <Routes>
-        <Route path='/*' element={
-          <PublicRoute>
+      <ProductProvider>
+        <Header />
+        <Routes>
+          <Route path='/*' element={
+            <PublicRoute>
 
-            <Routes>
+              <Routes>
 
-              <Route path={routes.home} element={<HomePage />} />
+                <Route path={routes.home} element={<HomePage />} />
 
-              {/* Rutas Producto */}
-              <Route path={routes.products} element={<Products />} />
+                {/* Rutas Producto */}
+                <Route path={routes.products} element={<Products />} />
 
-              <Route path={`${routes.viewProduct}/:id`} element={<ViewProduct />} />
+                <Route path={`${routes.viewProduct}/:id`} element={<ViewProduct />} />
 
-              {/* Rutas Categoría */}
-              <Route path={routes.mouseTeclado} element={<MouseTeclado />} />
-              <Route path={routes.gabinete} element={< Gabinete />} />
-              <Route path={routes.memoria} element={<Memoria />} />
+                {/* Rutas Categoría */}
+                <Route path={routes.mouseTeclado} element={<MouseTeclado />} />
+                <Route path={routes.gabinete} element={< Gabinete />} />
+                <Route path={routes.memoria} element={<Memoria />} />
 
-              {/* Rutas usuario */}
-              <Route path={routes.login} element={<LoginPage />} />
-              <Route path={routes.register} element={<RegisterPage />} />
+                {/* Rutas usuario */}
+                <Route path={routes.login} element={<LoginPage />} />
+                <Route path={routes.register} element={<RegisterPage />} />
 
-              {/* Ventana de errores  */}
-              <Route exact path="/*" element={<NotFoundPages />} />
+                {/* Ventana de errores  */}
+                <Route exact path="/*" element={<NotFoundPages />} />
 
-            </Routes>
-          </PublicRoute>
-        } />
+              </Routes>
+            </PublicRoute>
+          } />
 
-        <Route path='admin/*' element={
-          <PrivateRoute>
-            <Routes>
+          <Route path='admin/*' element={
+            <PrivateRoute>
+              <Routes>
 
-              {/* Productos */}
-              <Route path={routes.addProduct} element={<CrearProducto />} />
+                {/* Productos */}
+                <Route path={routes.addProduct} element={<CrearProducto />} />
 
-              {/* Categoria */}
-              <Route path={routes.addCategory} element={<CrearCategoria />} />
+                {/* Categoria */}
+                <Route path={routes.addCategory} element={<CrearCategoria />} />
 
-              {/* Rutas Marca */}
-              <Route path={routes.addMark} element={<CrearMarca />} />
-              {/* ruta admin user */}
-              <Route path={routes.userAdmin} element={<UserAdminSetting />} />
+                {/* Rutas Marca */}
+                <Route path={routes.addMark} element={<CrearMarca />} />
+                {/* ruta admin user */}
+                <Route path={routes.userAdmin} element={<UserAdminSetting />} />
 
-            </Routes>
-          </PrivateRoute>
-        } />
+              </Routes>
+            </PrivateRoute>
+          } />
 
-      </Routes>
-      <Footer />
+        </Routes>
+        <Footer />
+      </ProductProvider>
     </UserProvider>
   )
 }

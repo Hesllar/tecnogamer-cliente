@@ -26,17 +26,23 @@ export const ViewProduct = () => {
   return (
     <Container>
       <Row>
-        <Col>
-          <div className="card">
-            <div className="card-body">
-              <img className="d-block w-100" src={detail.img64 ? `data:image/${detail.extension};base64, ${detail.img64}` : ''} alt="IMG" />
-            </div>
-          </div>
-        </Col>
-        <Col>
-          <h1>Caracteristicas</h1>
-          <h2>Nombre Producto: {detail.nombreProducto}</h2>
-        </Col>
+        {
+          (detail.body) ?
+            <>
+              <Col>
+                <div className="card">
+                  <div className="card-body">
+                    <img className="d-block w-100" src={(detail.img64.length > 0) ? `data:image/${detail.body.extension};base64, ${detail.img64}` : ''} alt="IMG" />
+                  </div>
+                </div>
+              </Col>
+              <Col>
+                <h1>Caracteristicas</h1>
+                <h2>Nombre Producto: {detail.body.nombreProducto}</h2>
+              </Col>
+            </>
+            : ''
+        }
       </Row>
     </Container>
   )

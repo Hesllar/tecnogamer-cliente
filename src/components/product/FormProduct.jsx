@@ -5,8 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import { MarkList } from './MarkList';
 import { CategoryList } from '../category/CategoryList';
 import { useForm } from '../../hooks';
-import { httpRequest, toast } from '../../helpers';
-import axios from 'axios';
+import { httpRequest, toast, fileBase64 } from '../../helpers';
 
 export const FormProduct = ({ category, mark, newProduct }) => {
 
@@ -24,14 +23,15 @@ export const FormProduct = ({ category, mark, newProduct }) => {
 
   const handleSubmit = async (e) => {
     try {
+
       e.preventDefault();
 
-
-      const img64 = await converBase64(img.current.files[0]);
+      const img64 = await fileBase64(img.current.files[0]);
 
       const imgName = await httpRequest(import.meta.env.VITE_URL_UPLOAD, 'CREATE', { img64 });
 
       if (imgName.status !== 200) {
+
         const { data } = imgName.response;
 
         toast('error', data.message || 'Error no controlado');
@@ -71,23 +71,6 @@ export const FormProduct = ({ category, mark, newProduct }) => {
 
   }
 
-  const converBase64 = async (file) => {
-    return new Promise((resolve, reject) => {
-
-      let fileReade = new FileReader();
-
-      fileReade.readAsDataURL(file);
-
-      fileReade.onload = (() => {
-        // const type = fileReade.result.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
-        const type = fileReade.result;
-        resolve(type)
-      });
-      fileReade.onerror = ((error) => {
-        reject(error)
-      })
-    });
-  };
 
   return (
     <Col>
