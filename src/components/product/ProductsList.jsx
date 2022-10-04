@@ -8,9 +8,11 @@ export const ProductsList = ({data, isLoading,deleteProduct, mark, category, set
 
     const [isOpenEditarPM,openEditarPM,closeEditarPM] = useModal();
     const [isOpenDeletePM,openDeletePM,closeDeletePM] = useModal();
+    
     const [value, setValue] = useState();
     
-
+    console.log('producto')
+    console.log(data);
     return (
         <>
             <Col>
