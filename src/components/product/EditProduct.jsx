@@ -7,7 +7,7 @@ import { MarkList } from './MarkList';
 import { fileBase64, httpRequest, toast } from '../../helpers';
 
 export const EditProduct = ({ isOpen, close, value, mark, category, setIsUpdate }) => {
-
+    console.log(value)
     const { onInputChange, formState, onResetForm } = useForm({
         nombreProducto: value.nombreProducto,
         stock: value.stock,
@@ -15,7 +15,7 @@ export const EditProduct = ({ isOpen, close, value, mark, category, setIsUpdate 
         descripcion: value.descripcion,
         categoriaId: value.categoriaId[0]._id,
         marcaId: value.marcaId[0]._id,
-        img: value.img
+        img: value.img64
     });
 
     const img = useRef();
@@ -30,23 +30,28 @@ export const EditProduct = ({ isOpen, close, value, mark, category, setIsUpdate 
         try {
             e.preventDefault();
 
-            const img64 = await fileBase64(img.current.files[0]);
+            formState.extension = value.extension;
 
-            const imgName = await httpRequest(import.meta.env.VITE_URL_UPLOAD, 'CREATE', { img64 });
+            if (img.current.files[0]) {
 
-            if (imgName.status !== 200) {
+                const img64 = await fileBase64(img.current.files[0]);
 
-                const { data } = imgName.response;
+                const imgName = await httpRequest(import.meta.env.VITE_URL_UPLOAD, 'CREATE', { img64 });
 
-                toast('error', data.message || 'Error no controlado');
+                if (imgName.status !== 200) {
 
-                return;
+                    const { data } = imgName.response;
+
+                    toast('error', data.message || 'Error no controlado');
+
+                    return;
+                }
+                const { Data } = imgName.data;
+
+                formState.img = Data.bas64;
+
+                formState.extension = Data.extension;
             }
-            const { Data } = imgName.data;
-
-            formState.img = Data.bas64;
-
-            formState.extension = Data.extension;
 
             const resp = await httpRequest(`${import.meta.env.VITE_URL_UPDATE_PRODUCT}${value._id}`, 'UPDATE', formState);
 
@@ -160,7 +165,7 @@ export const EditProduct = ({ isOpen, close, value, mark, category, setIsUpdate 
                                 <Form.Control
                                     type='file'
                                     onChange={onInputChange}
-                                    name="img"
+                                    name="img64"
                                     ref={img}
                                 />
                             </Col>

@@ -10,6 +10,7 @@ export const routes = {
     register: '/register',
     addCategory: '/addCategory',
     addMark: '/addMark',
-    userAdmin: '/userAdmin'
+    userAdmin: '/userAdmin',
+    payCart: '/payCart'
 }
 

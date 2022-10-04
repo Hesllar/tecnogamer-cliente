@@ -20,6 +20,7 @@ import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
 import { UserAdminSetting } from '../page/administrador/userSetting/UserAdminSetting';
 import { ProductProvider } from '../context/ProductProvider';
+import { PayCart } from '../page/cart/PayCart';
 
 export const AppRouter = () => {
   return (
@@ -47,6 +48,9 @@ export const AppRouter = () => {
                 {/* Rutas usuario */}
                 <Route path={routes.login} element={<LoginPage />} />
                 <Route path={routes.register} element={<RegisterPage />} />
+
+                {/* Rutas carrito */}
+                <Route path={routes.payCart} element={<PayCart />} />
 
                 {/* Ventana de errores  */}
                 <Route exact path="/*" element={<NotFoundPages />} />

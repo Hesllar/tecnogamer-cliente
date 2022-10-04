@@ -4,14 +4,9 @@ import { useGetProducts } from '../../hooks/useGetProducts';
 import { routes } from '../../routes/config-route';
 import { useContext, useEffect } from 'react';
 import { ProductContext } from '../../context/ProductContext';
-
-const numberFormat = (valor) =>
-    new Intl.NumberFormat('es-CL', { currency: 'CLP', style: 'currency' }).format(valor);
+import { numberFormat } from '../../helpers'
 
 export const Products = () => {
-
-
-
 
     const { products, setProducts } = useContext(ProductContext);
 
