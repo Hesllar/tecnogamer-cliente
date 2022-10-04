@@ -15,6 +15,13 @@ export const UserAdminSetting = () => {
       [...user, userAdd],
     )
   }
+
+  const deleteUser = (id) =>{
+    const newData = user.filter( p => p._id !== id);
+    setUser(
+      newData,
+    );
+  }
   
   return (
     <Container className='regcontrainer'>
@@ -26,7 +33,7 @@ export const UserAdminSetting = () => {
         <Col className='col-xs-12 col-sm-12  col-md-6'>
             <UserAdminList  
               data={user} 
-              // deleteProduct={deleteProduct} 
+              deleteUser={deleteUser} 
               // setIsUpdate={setIsUpdate}
             />
         </Col>
