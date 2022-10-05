@@ -1,15 +1,20 @@
+import { useContext } from 'react';
 import { useState } from 'react';
 import { Col, Spinner } from 'react-bootstrap';
+import { CategoryContext } from '../../context/CategoryContext';
 import { useModal } from '../../hooks/useModal';
 import { DeleteCategory } from './DeleteCategory';
 import { EditCategory } from './EditCategory';
 
 
-export const CategoryListTable = ({ category, deleteCategory, setIsUpdate }) => {
+export const CategoryListTable = () => {
+
+    const { categorys } = useContext(CategoryContext);
 
     const [value, setValue] = useState();
 
     const [isOpenDelete, openDelete, closeDelete] = useModal();
+
     const [isOpenEdit, openEdit, closeEdit] = useModal();
 
     const handleDelete = (id) => {
@@ -26,20 +31,17 @@ export const CategoryListTable = ({ category, deleteCategory, setIsUpdate }) => 
         openEdit();
     }
 
-
-
-
     return (
         <>
             <Col>
                 {
-                    (category.length === 0) ? (<Spinner animation="border" />)
+                    (categorys.length === 0) ? (<Spinner animation="border" />)
                         : (
                             <>
 
                                 <ul className="list-group">
                                     {
-                                        category.map(c => (
+                                        categorys.map(c => (
                                             <li key={c._id} className="list-group-item d-flex justify-content-between">
                                                 <span className="align-self-center">
                                                     {c.nombreCategoria}
@@ -61,7 +63,6 @@ export const CategoryListTable = ({ category, deleteCategory, setIsUpdate }) => 
                         isOpen={isOpenEdit}
                         close={closeEdit}
                         value={value}
-                        setIsUpdate={setIsUpdate}
                     />
                     : null
             }
@@ -69,7 +70,6 @@ export const CategoryListTable = ({ category, deleteCategory, setIsUpdate }) => 
                 isOpen={isOpenDelete}
                 close={closeDelete}
                 value={value}
-                deleteCategory={deleteCategory}
             />
         </>
 

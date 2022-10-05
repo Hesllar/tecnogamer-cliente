@@ -7,12 +7,16 @@ import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 import { useEffect } from 'react';
 import { ListCart } from '../cart/ListCart';
+import { CategoryContext } from '../../context/CategoryContext';
 
 export const Header = () => {
 
   let rolUser = 1;
 
   const { user, setUser } = useContext(UserContext);
+
+  const { categorys } = useContext(CategoryContext);
+
 
   if (user.userData) {
 
@@ -64,9 +68,14 @@ export const Header = () => {
             id="nav-dropdown-dark-example"
             menuVariant="dark"
             title='Categoria'>
-            <NavDropdown.Item as={NavLink} to={routes.mouseTeclado} >Mouse y Teclados</NavDropdown.Item>
-            <NavDropdown.Item as={NavLink} to={routes.gabinete} >Gabinetes</NavDropdown.Item>
-            <NavDropdown.Item as={NavLink} to={routes.memoria} >Memoria</NavDropdown.Item>
+            {
+              (categorys.length > 0)
+                ? categorys.map(cat => (<NavDropdown.Item key={cat._id} as={NavLink} to={`${routes.categorys}/${cat._id}`} >{cat.nombreCategoria}</NavDropdown.Item>))
+                : ''
+            }
+
+            {/* <NavDropdown.Item as={NavLink} to={routes.gabinete} >Gabinetes</NavDropdown.Item>
+            <NavDropdown.Item as={NavLink} to={routes.memoria} >Memoria</NavDropdown.Item> */}
           </NavDropdown>
           <ListCart />
         </Nav>

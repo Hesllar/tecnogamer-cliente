@@ -2,9 +2,6 @@ import { Routes, Route } from 'react-router-dom';
 // import { Layout } from '../components/layouts/layaout';
 import { HomePage } from '../page/HomePage';
 import { Products } from '../page/product/Products';
-import { MouseTeclado } from '../page/categoria/MouseTeclado';
-import { Gabinete } from '../page/categoria/Gabinete';
-import { Memoria } from '../page/categoria/Memoria';
 import { routes } from './config-route';
 import { LoginPage } from '../page/user/LoginPage';
 import { RegisterPage } from '../page/user/RegisterPage';
@@ -21,65 +18,67 @@ import { PrivateRoute } from './PrivateRoute';
 import { UserAdminSetting } from '../page/administrador/userSetting/UserAdminSetting';
 import { ProductProvider } from '../context/ProductProvider';
 import { PayCart } from '../page/cart/PayCart';
+import { Categorys } from '../page/categoria/Categorys';
+import { CategoryProvider } from '../context/CategoryProvider';
 
 export const AppRouter = () => {
   return (
     <UserProvider>
       <ProductProvider>
-        <Header />
-        <Routes>
-          <Route path='/*' element={
-            <PublicRoute>
+        <CategoryProvider>
+          <Header />
+          <Routes>
+            <Route path='/*' element={
+              <PublicRoute>
 
-              <Routes>
+                <Routes>
 
-                <Route path={routes.home} element={<HomePage />} />
+                  <Route path={routes.home} element={<HomePage />} />
 
-                {/* Rutas Producto */}
-                <Route path={routes.products} element={<Products />} />
+                  {/* Rutas Producto */}
+                  <Route path={routes.products} element={<Products />} />
 
-                <Route path={`${routes.viewProduct}/:id`} element={<ViewProduct />} />
+                  <Route path={`${routes.viewProduct}/:id`} element={<ViewProduct />} />
 
-                {/* Rutas Categoría */}
-                <Route path={routes.mouseTeclado} element={<MouseTeclado />} />
-                <Route path={routes.gabinete} element={< Gabinete />} />
-                <Route path={routes.memoria} element={<Memoria />} />
+                  {/* Rutas Categoría */}
+                  <Route path={`${routes.categorys}/:id`} element={<Categorys />} />
 
-                {/* Rutas usuario */}
-                <Route path={routes.login} element={<LoginPage />} />
-                <Route path={routes.register} element={<RegisterPage />} />
+                  {/* Rutas usuario */}
+                  <Route path={routes.login} element={<LoginPage />} />
+                  <Route path={routes.register} element={<RegisterPage />} />
 
-                {/* Rutas carrito */}
-                <Route path={routes.payCart} element={<PayCart />} />
+                  {/* Rutas carrito */}
+                  <Route path={routes.payCart} element={<PayCart />} />
 
-                {/* Ventana de errores  */}
-                <Route exact path="/*" element={<NotFoundPages />} />
+                  {/* Ventana de errores  */}
+                  <Route exact path="/*" element={<NotFoundPages />} />
 
-              </Routes>
-            </PublicRoute>
-          } />
+                </Routes>
+              </PublicRoute>
+            } />
 
-          <Route path='admin/*' element={
-            <PrivateRoute>
-              <Routes>
+            <Route path='admin/*' element={
+              <PrivateRoute>
+                <Routes>
 
-                {/* Productos */}
-                <Route path={routes.addProduct} element={<CrearProducto />} />
+                  {/* Productos */}
+                  <Route path={routes.addProduct} element={<CrearProducto />} />
 
-                {/* Categoria */}
-                <Route path={routes.addCategory} element={<CrearCategoria />} />
+                  {/* Categoria */}
+                  <Route path={routes.addCategory} element={<CrearCategoria />} />
 
-                {/* Rutas Marca */}
-                <Route path={routes.addMark} element={<CrearMarca />} />
-                {/* ruta admin user */}
-                <Route path={routes.userAdmin} element={<UserAdminSetting />} />
+                  {/* Rutas Marca */}
+                  <Route path={routes.addMark} element={<CrearMarca />} />
+                  {/* ruta admin user */}
+                  <Route path={routes.userAdmin} element={<UserAdminSetting />} />
 
-              </Routes>
-            </PrivateRoute>
-          } />
+                </Routes>
+              </PrivateRoute>
+            } />
 
-        </Routes>
-        <Footer />
+          </Routes>
+          <Footer />
+        </CategoryProvider>
       </ProductProvider>
     </UserProvider>
   )

@@ -82,7 +82,7 @@ export const PayCart = () => {
                                 ? products.map((prod, i) => (
                                     <tr key={prod._id}>
                                         <td>{i + 1}</td>
-                                        <td>{prod.nombreProducto}</td>
+                                        <td><Row><Col>{prod.nombreProducto}</Col><Col><img className="d-block w-50" src={`data:image/${prod.extension};base64, ${prod.img64}`} alt="IMG" /></Col></Row></td>
                                         <td>{numberFormat(prod.precio)}</td>
                                         <td>{numberFormat(parseInt(prod.cant) * parseInt(prod.precio))}</td>
                                         <td className='d-flex justify-content-between'><Button className='btn btn-primary' onClick={() => handleDelete(prod._id)}>-</Button> {prod.cant}<Button className='btn btn-primary' onClick={() => hadleAdd(prod._id)}>+</Button> </td>

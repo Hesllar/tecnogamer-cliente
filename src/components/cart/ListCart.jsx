@@ -6,6 +6,7 @@ import { routes } from '../../routes/config-route';
 import { UserContext } from '../../context/UserContext';
 import { ModalCart } from './ModalCart';
 import { useModal } from '../../hooks/useModal';
+import { numberFormat } from '../../helpers';
 
 
 
@@ -58,7 +59,7 @@ export const ListCart = () => {
                     products.map(product => {
 
                         return < NavDropdown.Item key={product._id}>
-                            {`Producto: ${product.nombreProducto} - Precio: ${parseInt(product.cant) * parseInt(product.precio)} - cantidad: ${product.cant}`}
+                            {`Producto: ${product.nombreProducto} - Precio: ${numberFormat(parseInt(product.cant) * parseInt(product.precio))} - cantidad: ${product.cant}`}
                             <Button type="button" className=" btn btn-danger mt-2" onClick={() => handleDelete(product._id)}>X</Button>
                         </NavDropdown.Item>
 
@@ -66,7 +67,7 @@ export const ListCart = () => {
 
                 }
                 <span>
-                    Total: ${total}
+                    Total: {numberFormat(total)}
                     {(products.length > 0)
                         ? <Button type="Button" className=" btn btn-primary mt-2" onClick={canPay}>Comprar</Button>
                         : ''}

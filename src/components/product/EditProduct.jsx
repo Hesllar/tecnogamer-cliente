@@ -1,13 +1,16 @@
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { Modal, Form, Button, Col, Card, Row } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import { useForm } from '../../hooks';
 import { CategoryList } from '../category/CategoryList';
 import { MarkList } from './MarkList';
 import { fileBase64, httpRequest, toast } from '../../helpers';
+import { CategoryContext } from '../../context/CategoryContext';
 
-export const EditProduct = ({ isOpen, close, value, mark, category, setIsUpdate }) => {
-    console.log(value)
+export const EditProduct = ({ isOpen, close, value, mark, setIsUpdate }) => {
+
+    const { categorys } = useContext(CategoryContext);
+
     const { onInputChange, formState, onResetForm } = useForm({
         nombreProducto: value.nombreProducto,
         stock: value.stock,
@@ -143,7 +146,7 @@ export const EditProduct = ({ isOpen, close, value, mark, category, setIsUpdate 
                                 <Form.Select name="categoriaId" onChange={onInputChange} value={formState.categoriaId}>
                                     <option value="Seleccione" disabled> Seleccione </option>
                                     {
-                                        category.map(c => (<CategoryList key={c._id} category={c} />))
+                                        categorys.map(c => (<CategoryList key={c._id} category={c} />))
                                     }
                                 </Form.Select>
                             </Col>

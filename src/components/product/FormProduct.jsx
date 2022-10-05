@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Button, Col, Card, Row } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
@@ -6,8 +6,11 @@ import { MarkList } from './MarkList';
 import { CategoryList } from '../category/CategoryList';
 import { useForm } from '../../hooks';
 import { httpRequest, toast, fileBase64 } from '../../helpers';
+import { CategoryContext } from '../../context/CategoryContext';
 
-export const FormProduct = ({ category, mark, newProduct }) => {
+export const FormProduct = ({ mark, newProduct }) => {
+
+  const { categorys } = useContext(CategoryContext);
 
   const { onInputChange, formState, onResetForm } = useForm({
     nombreProducto: '',
@@ -103,7 +106,7 @@ export const FormProduct = ({ category, mark, newProduct }) => {
               <Form.Select onChange={onInputChange} name="categoriaId" value={formState.categoriaId}>
                 <option value='Seleccione' disabled> Seleccione </option>
                 {
-                  category.map(c => (<CategoryList key={c._id} category={c} />))
+                  categorys.map(c => (<CategoryList key={c._id} category={c} />))
                 }
               </Form.Select>
             </Col>
