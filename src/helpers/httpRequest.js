@@ -1,6 +1,9 @@
 import axios from 'axios';
 
 export const httpRequest = async (url = '', accion = 'GET', body = {}) => {
+
+    const token = localStorage.getItem('token') || '';
+
     try {
         switch (accion) {
             case 'GET':
@@ -9,15 +12,15 @@ export const httpRequest = async (url = '', accion = 'GET', body = {}) => {
 
             case 'CREATE':
 
-                return await axios.post(url, body, { headers: { 'x-access-token': 'TOKEN', 'Content-Type': 'application/json' } });
+                return await axios.post(url, body, { headers: { token, 'Content-Type': 'application/json' } });
 
             case 'UPDATE':
 
-                return await axios.put(url, body, { headers: { 'x-access-token': 'TOKEN', 'Content-Type': 'application/json' } });
+                return await axios.put(url, body, { headers: { token, 'Content-Type': 'application/json' } });
 
             case 'DELETE':
 
-                return await axios.delete(url, { headers: { 'x-access-token': 'TOKEN' } });
+                return await axios.delete(url, { headers: { token } });
 
             default:
 

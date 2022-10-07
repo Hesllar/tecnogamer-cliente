@@ -35,6 +35,12 @@ export const Login = () => {
 
             const { data } = resp;
 
+            const respToken = await httpRequest(import.meta.env.VITE_CREATE_TOKEN, 'CREATE', { apiKey: import.meta.env.VITE_APIKEY });
+
+            const { token } = respToken.data.Data;
+
+            localStorage.setItem('token', token);
+
             localStorage.setItem('user', JSON.stringify(data.Data));
 
             toast('success', data.message);

@@ -54,7 +54,7 @@ export const Categorys = () => {
                                             <Card.Body>
                                                 <label>{numberFormat(parseInt(pro.precio))}</label>
                                             </Card.Body>
-                                            <Button className='m-1' variant="primary" onClick={() => addCart({ ...pro, cant: 1 }, products, setProducts)}>carrito</Button>
+                                            <Button className='m-1' variant="primary" onClick={() => addCart({ ...pro, cant: 1 }, products, setProducts)}>Agregar</Button>
                                             <Link className='m-1 btn btn-primary' to={`${routes.viewProduct}/${pro._id}`} >Ver detalle</Link>
                                         </Card>
                                     </Col>
