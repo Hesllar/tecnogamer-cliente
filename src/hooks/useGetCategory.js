@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {httpRequest} from '../helpers/httpRequest';
+import { httpRequest } from '../helpers/httpRequest';
 
 export const useGetCategory = () => {
 
@@ -10,7 +10,7 @@ export const useGetCategory = () => {
     const listCategory = async () => {
 
         const resCategory = await httpRequest(import.meta.env.VITE_URL_ALL_CATEGORIES, 'GET');
-        
+
         const { Data } = resCategory.data;
 
         setCategory(Data)
@@ -21,14 +21,14 @@ export const useGetCategory = () => {
     }, []);
 
     useEffect(() => {
-        if(isUpdate){
+        if (isUpdate) {
             listCategory();
             setIsUpdate(false);
         }
     }, [isUpdate]);
-    
 
-    return{
+
+    return {
         category,
         setCategory,
         setIsUpdate
