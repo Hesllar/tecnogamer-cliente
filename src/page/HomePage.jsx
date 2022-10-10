@@ -8,7 +8,6 @@ import imagen3 from '../img/home/imagen3.png';
 import imagen4 from '../img/home/imagen4.png';
 import imagen5 from '../img/home/imagen5.png';
 import imagen6 from '../img/home/imagen6.png';
-
 import '../css/HomePage.css'
 
 export const HomePage = () => {

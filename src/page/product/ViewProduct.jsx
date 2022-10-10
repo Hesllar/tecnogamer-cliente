@@ -26,7 +26,6 @@ export const ViewProduct = () => {
     detailProduct();
   }, [])
 
-
   return (
     <Container>
       <Row className='mt-5'>
@@ -50,6 +49,7 @@ export const ViewProduct = () => {
               </Col>
               <Col className='mt-3'>
                 <h4>Caracteristicas</h4>
+                {productDetail.descripcion}
               </Col>
             </>
             : ''

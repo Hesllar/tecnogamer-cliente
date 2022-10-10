@@ -34,7 +34,7 @@ export const UserAdminSetting = () => {
             <UserAdminList  
               data={user} 
               deleteUser={deleteUser} 
-              // setIsUpdate={setIsUpdate}
+              setIsUpdate={setIsUpdate}
             />
         </Col>
       </Row>
