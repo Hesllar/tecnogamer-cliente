@@ -2,10 +2,9 @@
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { routes } from '../../routes/config-route';
-import logo from '../../img/tecnogamelogo.png'
-import { useContext } from 'react';
+import logo from '../../img/tecnogamelogo.png';
+import { useContext, useEffect } from 'react';
 import { UserContext } from '../../context/UserContext';
-import { useEffect } from 'react';
 import { ListCart } from '../cart/ListCart';
 import { CategoryContext } from '../../context/CategoryContext';
 
@@ -74,9 +73,6 @@ export const Header = () => {
                 ? categorys.map(cat => (<NavDropdown.Item key={cat._id} as={NavLink} to={`${routes.categorys}/${cat._id}`} >{cat.nombreCategoria}</NavDropdown.Item>))
                 : ''
             }
-
-            {/* <NavDropdown.Item as={NavLink} to={routes.gabinete} >Gabinetes</NavDropdown.Item>
-            <NavDropdown.Item as={NavLink} to={routes.memoria} >Memoria</NavDropdown.Item> */}
           </NavDropdown>
           <ListCart />
         </Nav>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {httpRequest} from '../helpers/httpRequest';
+import { httpRequest } from '../helpers/httpRequest';
 
 export const userGetUser = () => {
 
@@ -10,7 +10,7 @@ export const userGetUser = () => {
     const selectUser = async () => {
 
         const resUser = await httpRequest(import.meta.env.VITE_URL_ALL_USERS, 'GET');
-        
+
         const { Data } = resUser.data;
 
         setUser(Data)
@@ -20,14 +20,14 @@ export const userGetUser = () => {
         selectUser();
     }, []);
 
-    // useEffect(() => {
-    //     if(isUpdate){
-    //         selectUser();
-    //         setIsUpdate(false);
-    //     }
-    // }, [isUpdate]);
-    
-    return{
+    useEffect(() => {
+        if (isUpdate) {
+            selectUser();
+            setIsUpdate(false);
+        }
+    }, [isUpdate]);
+
+    return {
         user,
         setUser,
         setIsUpdate

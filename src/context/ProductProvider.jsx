@@ -6,7 +6,6 @@ export const ProductProvider = ({ children }) => {
 
     const [products, setProducts] = useState(JSON.parse(localStorage.getItem('products')) || []);
 
-    ///console.log(products)
     return (
         <ProductContext.Provider value={{ products, setProducts }}>
             {children}

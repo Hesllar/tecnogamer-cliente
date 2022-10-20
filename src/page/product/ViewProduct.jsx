@@ -42,9 +42,12 @@ export const ViewProduct = () => {
               <Col className='col-6'>
                 <h2>{productDetail.nombreProducto}</h2>
                 <h2>Stock: {productDetail.stock}</h2>
-                <div className='d-flex align-items-end'>
-                  <Button onClick={() => addCart({ ...productDetail, cant: 1 }, products, setProducts)}>Agregar</Button>
-                </div>
+                {
+                  (productDetail.stock > 0) &&
+                  <div className='d-flex align-items-end'>
+                    <Button onClick={() => addCart({ ...productDetail, cant: 1 }, products, setProducts)}>Agregar</Button>
+                  </div>
+                }
 
               </Col>
               <Col className='mt-3'>

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Form, Button, Col, Card, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -9,6 +10,8 @@ import { useForm } from '../../hooks';
 export const Register = () => {
 
   const navigate = useNavigate();
+
+  const [waitTime, seTwaitTime] = useState(null);
 
   const { onInputChange, formState, onResetForm } = useForm({
     nombre: '',
@@ -24,9 +27,13 @@ export const Register = () => {
 
       e.preventDefault();
 
+      seTwaitTime(true);
+
       const resp = await httpRequest(import.meta.env.VITE_URL_CREATE_USER, 'CREATE', formState);
 
       if (resp.status !== 200) {
+
+        seTwaitTime(false);
 
         const { data } = resp.response;
 
@@ -34,6 +41,8 @@ export const Register = () => {
 
         return;
       }
+
+
 
       const { data } = resp;
 
@@ -88,7 +97,7 @@ export const Register = () => {
             </Col>
           </Form.Group>
           <Form.Group >
-            <Button type="submit" className="RegisterBoton mt-2" variant="success"  >Registrarse</Button>
+            <Button type="submit" className="RegisterBoton mt-2" variant="success" disabled={!!waitTime} >Registrarse</Button>
           </Form.Group>
         </Form>
       </Card>

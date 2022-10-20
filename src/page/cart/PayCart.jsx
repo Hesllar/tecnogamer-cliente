@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import { useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { Row, Container, Col, Table, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { ProductContext } from '../../context/ProductContext';
 import { UserContext } from '../../context/UserContext';
-import { numberFormat } from '../../helpers';
+import { httpRequest, numberFormat, toast } from '../../helpers';
 
 export const PayCart = () => {
 
@@ -58,6 +58,52 @@ export const PayCart = () => {
         return setProducts(newData2);
     }
 
+    const pay = async () => {
+
+        try {
+            const listProducts = products.map(prod => {
+                return {
+                    valor: parseInt(prod.precio) * prod.cant,
+                    cantidad: prod.cant,
+                    productoId: prod._id
+                }
+            });
+
+            const order = {
+                products: listProducts,
+                valorCompra: calTotal(),
+                fechaCompra: new Date(),
+                usuarioId: user.userData._id,
+                tipoPago: 'NO ACTIVO AÚN',
+                estadoPago: 'NO ACTIVO AÚN',
+                fechaPago: new Date(),
+            }
+
+            const resp = await httpRequest(import.meta.env.VITE_PAY, 'CREATE', order);
+
+            if (resp.status !== 200) {
+                const { data } = resp.response;
+
+                toast('error', data.message || 'Error no controlado');
+
+                return;
+            }
+
+            localStorage.removeItem('products');
+
+            setProducts([]);
+
+            const { data } = resp;
+
+            toast('success', data.message);
+
+        } catch (error) {
+            toast('error', error);
+        }
+
+
+
+    }
     useEffect(() => {
         if (!user.logged) navigate('/')
     }, [user.logged])
@@ -98,11 +144,13 @@ export const PayCart = () => {
             <Row>
                 <Col className='d-flex justify-content-end'>
                     {
-                        (products.length > 0) && <Button className='btn btn-success'>Comprar</Button>
+                        (products.length > 0) && <Button className='btn btn-success' onClick={pay}>Comprar</Button>
                     }
 
                 </Col>
             </Row>
+            <ToastContainer />
         </Container>
+
     )
 }
