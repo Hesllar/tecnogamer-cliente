@@ -5,12 +5,14 @@ import { ToastContainer } from 'react-toastify';
 import { MarkList } from './MarkList';
 import { CategoryList } from '../category/CategoryList';
 import { useForm } from '../../hooks';
-import { httpRequest, toast, fileBase64 } from '../../helpers';
+import { httpRequest, toast, fileBase64, waitMoment } from '../../helpers';
 import { CategoryContext } from '../../context/CategoryContext';
 
 export const FormProduct = ({ mark, newProduct }) => {
 
   const { categorys } = useContext(CategoryContext);
+
+  const { wait, setWait } = waitMoment();
 
   const { onInputChange, formState, onResetForm } = useForm({
     nombreProducto: '',
@@ -29,6 +31,8 @@ export const FormProduct = ({ mark, newProduct }) => {
 
       e.preventDefault();
 
+      setWait(true);
+
       const img64 = await fileBase64(img.current.files[0]);
 
       const imgName = await httpRequest(import.meta.env.VITE_URL_UPLOAD, 'CREATE', { img64 });
@@ -38,6 +42,8 @@ export const FormProduct = ({ mark, newProduct }) => {
         const { data } = imgName.response;
 
         toast('error', data.message || 'Error no controlado');
+
+        setWait(false);
 
         return;
       }
@@ -56,6 +62,8 @@ export const FormProduct = ({ mark, newProduct }) => {
 
         onResetForm();
 
+        setWait(false);
+
         return;
       }
 
@@ -67,6 +75,7 @@ export const FormProduct = ({ mark, newProduct }) => {
 
       toast('success', data.message);
 
+      setWait(false);
     } catch (error) {
 
       toast('error', error);
@@ -129,7 +138,7 @@ export const FormProduct = ({ mark, newProduct }) => {
             </Col>
           </Form.Group>
           <Form.Group >
-            <Button type="submit" className="RegisterBoton mt-2" variant="success"  >Registrar Producto</Button>
+            <Button type="submit" className="RegisterBoton mt-2" variant="success" disabled={!!wait} >Registrar Producto</Button>
             <Link to="/" className="linkInicio"><Button className="RegisterBoton mt-2 " style={{ marginLeft: "10px" }} variant="warning" >Cancelar</Button></Link>
           </Form.Group>
 

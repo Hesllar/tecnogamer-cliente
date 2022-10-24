@@ -1,67 +1,75 @@
-import {Link} from 'react-router-dom';
-import { Form, Button, Col, Card, Row} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Form, Button, Col, Card, Row } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import { useForm } from '../../hooks';
-import {httpRequest, toast} from '../../helpers';
+import { httpRequest, toast, waitMoment } from '../../helpers';
 
-export const AddMark = ({addMark}) => {
+export const AddMark = ({ addMark }) => {
 
-    const {onInputChange, formState, onResetForm} = useForm({
-        nombreMarca:''
-    });
+  const { onInputChange, formState, onResetForm } = useForm({
+    nombreMarca: ''
+  });
 
-    const handleSubmit = async(e) =>{
+  const { wait, setWait } = waitMoment();
+
+  const handleSubmit = async (e) => {
 
     try {
       e.preventDefault();
 
-      const resp = await httpRequest(import.meta.env.VITE_URL_CREATE_MARK,'CREATE',formState);
+      setWait(true);
 
-      if(resp.status !== 200){
+      const resp = await httpRequest(import.meta.env.VITE_URL_CREATE_MARK, 'CREATE', formState);
 
-        const {data} =  resp.response;
-        
-        toast('error',data.message || 'Error no controlado');
+      if (resp.status !== 200) {
+
+        const { data } = resp.response;
+
+        toast('error', data.message || 'Error no controlado');
 
         onResetForm();
+
+        setWait(false);
 
         return;
       }
 
-      const {data} = resp;
+      const { data } = resp;
 
       addMark(data.Data);
 
       onResetForm();
 
-      toast('success',data.message);
-      
+      toast('success', data.message);
+
+      setWait(false);
+
     } catch (error) {
 
-      toast('error',error);
+      toast('error', error);
     }
-   
+
   }
 
   return (
     <Col>
-        <Card id="cardregister" style={{ maxWidth: '400px' }} className=" mx-auto p-2 ">
-          <h3 className='regtitle'>Registro</h3>
-          <Form className='Formregister' onSubmit={handleSubmit}>
-            <Form.Group as={Row} className="mb-3">
-              <Col sm="12">
-                <Form.Control onChange={onInputChange} name="nombreMarca" type="text" placeholder="Ingrese una marca" value={formState.nombreMarca} required />
-              </Col>
-            </Form.Group>
-            <Form.Group>
-              <Link to="/" className="linkInicio">&larr; Volver Al Inicio</Link>
-            </Form.Group>
-            <Form.Group>
-              <Button type="submit" className="RegisterBoton mt-2" variant="primary" >Crear</Button>
-            </Form.Group>
-          </Form>
-        </Card>
-        <ToastContainer />
-      </Col>
+      <Card id="cardregister" style={{ maxWidth: '400px' }} className=" mx-auto p-2 ">
+        <h3 className='regtitle'>Registro</h3>
+        <Form className='Formregister' onSubmit={handleSubmit}>
+          <Form.Group as={Row} className="mb-3">
+            <Col sm="12">
+              <Form.Control onChange={onInputChange} name="nombreMarca" type="text" placeholder="Ingrese una marca" value={formState.nombreMarca} required />
+            </Col>
+          </Form.Group>
+          <Form.Group>
+            <Link to="/" className="linkInicio">&larr; Volver Al Inicio</Link>
+          </Form.Group>
+          <Form.Group>
+            <Button type="submit" className="RegisterBoton mt-2" variant="primary" disabled={!!wait} >Crear</Button>
+          </Form.Group>
+        </Form>
+      </Card>
+      <ToastContainer />
+    </Col>
   )
 }

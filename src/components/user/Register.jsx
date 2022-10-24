@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Form, Button, Col, Card, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { httpRequest, toast } from '../../helpers';
+import { UserContext } from '../../context/UserContext';
+import { httpRequest, toast, waitMoment } from '../../helpers';
 import { useForm } from '../../hooks';
 
 
@@ -11,7 +12,9 @@ export const Register = () => {
 
   const navigate = useNavigate();
 
-  const [waitTime, seTwaitTime] = useState(null);
+  const { setUser } = useContext(UserContext);
+
+  const { wait, setWait } = waitMoment();
 
   const { onInputChange, formState, onResetForm } = useForm({
     nombre: '',
@@ -27,13 +30,13 @@ export const Register = () => {
 
       e.preventDefault();
 
-      seTwaitTime(true);
+      setWait(true);
 
       const resp = await httpRequest(import.meta.env.VITE_URL_CREATE_USER, 'CREATE', formState);
 
       if (resp.status !== 200) {
 
-        seTwaitTime(false);
+        setWait(false);
 
         const { data } = resp.response;
 
@@ -42,22 +45,23 @@ export const Register = () => {
         return;
       }
 
-
-
       const { data } = resp;
 
       toast('success', `${data.message}, su nombre usuario ha sido enviado al correo registrado`);
 
       // await httpRequest(import.meta.env.VITE_URL_EMAIL, 'CREATE', { correo: formState.correo });
 
-      setTimeout(() => {
+      const respToken = await httpRequest(import.meta.env.VITE_CREATE_TOKEN, 'CREATE', { apiKey: import.meta.env.VITE_APIKEY_USER });
 
-        navigate('/login', {
-          replace: true
-        });
+      const { token } = respToken.data.Data;
 
-      }, 2600);
+      localStorage.setItem('token', token);
 
+      localStorage.setItem('user', JSON.stringify(data.Data));
+
+      setUser({ logged: true, userData: data.Data })
+
+      navigate('/', { replace: true });
     } catch (error) {
       toast('error', error);
     }
@@ -97,7 +101,7 @@ export const Register = () => {
             </Col>
           </Form.Group>
           <Form.Group >
-            <Button type="submit" className="RegisterBoton mt-2" variant="success" disabled={!!waitTime} >Registrarse</Button>
+            <Button type="submit" className="RegisterBoton mt-2" variant="success" disabled={!!wait} >Registrarse</Button>
           </Form.Group>
         </Form>
       </Card>

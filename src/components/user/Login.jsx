@@ -1,32 +1,34 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Form, Button, Col, Card, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { UserContext } from '../../context/UserContext';
-import { httpRequest, toast } from '../../helpers';
+import { httpRequest, toast, waitMoment } from '../../helpers';
 import { useForm } from '../../hooks';
 
 export const Login = () => {
 
     const navigate = useNavigate();
 
-    const { user, setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
 
     const { onInputChange, formState } = useForm({
         nombreUsuario: '',
         contrasena: ''
     });
 
-    const [logged, setLogged] = useState(null);
+    const { wait, setWait } = waitMoment();
 
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            setLogged(true);
+
+            setWait(true);
+
             const resp = await httpRequest(import.meta.env.VITE_URL_LOGIN, 'CREATE', formState);
 
             if (resp.status !== 200) {
-                setLogged(false);
+                setWait(false);
                 const { data } = resp.response;
 
                 toast('error', data.message || 'Error no controlado');
@@ -44,22 +46,9 @@ export const Login = () => {
 
             localStorage.setItem('user', JSON.stringify(data.Data));
 
-            toast('success', data.message);
+            setUser({ logged: true, userData: data.Data });
 
-
-
-            setTimeout(() => {
-
-                setUser({
-                    logged: true,
-                    userData: data.Data
-                });
-
-                navigate('/', {
-                    replace: true
-                });
-
-            }, 2500);
+            navigate('/', { replace: true });
 
         } catch (error) {
             console.log(error)
@@ -74,16 +63,16 @@ export const Login = () => {
                 <Form className='Formregister' onSubmit={handleSubmit}>
                     <Form.Group as={Row} className="mb-3" >
                         <Col sm="12">
-                            <Form.Control autoComplete="true" onChange={onInputChange} name="nombreUsuario" type="text" placeholder="Nombre usuario" value={formState.nombreUsuario} />
+                            <Form.Control autoComplete="true" onChange={onInputChange} name="nombreUsuario" type="text" placeholder="Nombre usuario" value={formState.nombreUsuario} required />
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3" >
                         <Col sm="12">
-                            <Form.Control onChange={onInputChange} name="contrasena" type="password" placeholder="Contraseña" value={formState.contrasena} />
+                            <Form.Control onChange={onInputChange} name="contrasena" type="password" placeholder="Contraseña" value={formState.contrasena} required />
                         </Col>
                     </Form.Group>
                     <Form.Group >
-                        <Button type="submit" className="RegisterBoton mt-2" variant="success" disabled={!!logged} >Iniciar sesión</Button>
+                        <Button type="submit" className="RegisterBoton mt-2" variant="success" disabled={!!wait} >Iniciar sesión</Button>
                     </Form.Group>
                 </Form>
             </Card>

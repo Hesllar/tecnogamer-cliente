@@ -7,10 +7,15 @@ import { useContext, useEffect } from 'react';
 import { UserContext } from '../../context/UserContext';
 import { ListCart } from '../cart/ListCart';
 import { CategoryContext } from '../../context/CategoryContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useModal } from '../../hooks/useModal';
+import { Perfil } from '../user/Perfil';
 
 export const Header = () => {
 
   let rolUser = 1;
+
+  const [isOpen, open, close] = useModal();
 
   const { user, setUser } = useContext(UserContext);
 
@@ -76,16 +81,28 @@ export const Header = () => {
           </NavDropdown>
           <ListCart />
         </Nav>
-        {(user.logged) ? <h4 className='text-muted'>{`Hola ${user.userData.nombre} ${user.userData.apellido}`}</h4> : ''}
+        {
+          (user.logged) && <NavDropdown
+            className='me-5'
+            id="nav-dropdown"
+            menuVariant="dark"
+            title='Mi cuenta'>
+            <NavDropdown.Item onClick={open}>Perfil</NavDropdown.Item>
+            <NavDropdown.Item>Cambiar contraseña</NavDropdown.Item>
+            <NavDropdown.Item onClick={logout}>Cerrar sesión</NavDropdown.Item>
+          </NavDropdown>
+        }
         <Nav>
-
           {(!user.logged) ? <Nav.Link as={NavLink} to={routes.login} >Iniciar Sesion</Nav.Link> : ''}
           {(!user.logged) ? <Nav.Link as={NavLink} to={routes.register} >Registrarse</Nav.Link> : ''}
-          {(user.logged) ? <Nav.Link onClick={logout} >Cerrar Sesion</Nav.Link> : ''}
         </Nav>
 
 
       </Navbar.Collapse>
+      {
+        (isOpen) && <Perfil isOpen={isOpen} close={close} user={user.userData} />
+      }
+
     </Navbar >
   )
 }
