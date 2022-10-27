@@ -1,7 +1,6 @@
 import { useContext, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Button, Col, Card, Row } from 'react-bootstrap';
-import { ToastContainer } from 'react-toastify';
 import { MarkList } from './MarkList';
 import { CategoryList } from '../category/CategoryList';
 import { useForm } from '../../hooks';
@@ -144,7 +143,6 @@ export const FormProduct = ({ mark, newProduct }) => {
 
         </Form>
       </Card>
-      <ToastContainer />
     </Col>
 
   )

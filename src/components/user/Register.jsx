@@ -1,7 +1,6 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Form, Button, Col, Card, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import { UserContext } from '../../context/UserContext';
 import { httpRequest, toast, waitMoment } from '../../helpers';
 import { useForm } from '../../hooks';
@@ -16,7 +15,7 @@ export const Register = () => {
 
   const { wait, setWait } = waitMoment();
 
-  const { onInputChange, formState, onResetForm } = useForm({
+  const { onInputChange, formState } = useForm({
     nombre: '',
     apellido: '',
     correo: '',
@@ -47,8 +46,6 @@ export const Register = () => {
 
       const { data } = resp;
 
-      toast('success', `${data.message}, su nombre usuario ha sido enviado al correo registrado`);
-
       // await httpRequest(import.meta.env.VITE_URL_EMAIL, 'CREATE', { correo: formState.correo });
 
       const respToken = await httpRequest(import.meta.env.VITE_CREATE_TOKEN, 'CREATE', { apiKey: import.meta.env.VITE_APIKEY_USER });
@@ -62,6 +59,8 @@ export const Register = () => {
       setUser({ logged: true, userData: data.Data })
 
       navigate('/', { replace: true });
+
+      toast('success', data.message);
     } catch (error) {
       toast('error', error);
     }
@@ -105,7 +104,6 @@ export const Register = () => {
           </Form.Group>
         </Form>
       </Card>
-      <ToastContainer />
     </Col>
 
   )

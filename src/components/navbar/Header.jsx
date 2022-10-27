@@ -10,12 +10,16 @@ import { CategoryContext } from '../../context/CategoryContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from '../../hooks/useModal';
 import { Perfil } from '../user/Perfil';
+import { CambiarContra } from '../user/CambiarContra';
+import { ToastContainer } from 'react-toastify';
 
 export const Header = () => {
 
   let rolUser = 1;
 
-  const [isOpen, open, close] = useModal();
+  const [isOpenPerfil, openPerfil, closePerfil] = useModal();
+
+  const [isOpenPass, openPass, closePass] = useModal();
 
   const { user, setUser } = useContext(UserContext);
 
@@ -87,8 +91,8 @@ export const Header = () => {
             id="nav-dropdown"
             menuVariant="dark"
             title='Mi cuenta'>
-            <NavDropdown.Item onClick={open}>Perfil</NavDropdown.Item>
-            <NavDropdown.Item>Cambiar contraseña</NavDropdown.Item>
+            <NavDropdown.Item onClick={openPerfil}>Perfil</NavDropdown.Item>
+            <NavDropdown.Item onClick={openPass}>Cambiar contraseña</NavDropdown.Item>
             <NavDropdown.Item onClick={logout}>Cerrar sesión</NavDropdown.Item>
           </NavDropdown>
         }
@@ -99,10 +103,10 @@ export const Header = () => {
 
 
       </Navbar.Collapse>
-      {
-        (isOpen) && <Perfil isOpen={isOpen} close={close} user={user.userData} />
-      }
-
+      {(isOpenPerfil) && <Perfil isOpen={isOpenPerfil} close={closePerfil} user={user.userData} setUser={setUser} />}
+      {(isOpenPass) && <CambiarContra isOpen={isOpenPass} close={closePass} user={user.userData} />}
+      <ToastContainer />
     </Navbar >
+
   )
 }

@@ -4,49 +4,50 @@ import { useForm } from '../../../hooks';
 import { ToastContainer } from 'react-toastify';
 import { httpRequest, toast } from '../../../helpers';
 
-export const UserAdminForm = ({newUser}) => {
+export const UserAdminForm = ({ newUser }) => {
 
-    const { onInputChange, formState, onResetForm  } = useForm({
-        nombre: '',
-        apellido: '',
-        correo: '',
-        rut: '',
-        fono: '',
-        contrasena: '',
-        tipoUsuario: 'Seleccione',
-      });
+  const { onInputChange, formState, onResetForm } = useForm({
+    nombre: '',
+    apellido: '',
+    correo: '',
+    rut: '',
+    fono: '',
+    contrasena: '',
+    tipoUsuario: 'Seleccione',
+  });
 
-    const handleSubmit = async (e) => {
-        try {
-    
-            e.preventDefault();
-            const resp = await httpRequest(import.meta.env.VITE_URL_CREATE_USER, 'CREATE', formState);
-        
-            if (resp.status !== 200) {
-        
-                const { data } = resp.response;
-        
-                return toast('error', data.message || 'Error no controlado'); 
-            }
-        
-            const { data } = resp;
+  const handleSubmit = async (e) => {
+    try {
 
-            newUser(data.Data)
+      e.preventDefault();
+      const resp = await httpRequest(import.meta.env.VITE_URL_CREATE_USER, 'CREATE', formState);
 
-            toast('success', `${data.message}, su nombre usuario ha sido enviado al correo registrado`);
-            onResetForm()
-            
-            // await httpRequest(import.meta.env.VITE_URL_EMAIL, 'CREATE', { correo: formState.correo });
-        
-            setTimeout(() => {
-                // resetear form 
-                
-            }, 2600);
-        
-        } catch (error) {
-          toast('error', error);
-        }
+      if (resp.status !== 200) {
+
+        const { data } = resp.response;
+
+        return toast('error', data.message || 'Error no controlado');
       }
+
+      const { data } = resp;
+
+      newUser(data.Data)
+
+      toast('success', `${data.message}, su nombre usuario ha sido enviado al correo registrado`);
+
+      onResetForm();
+
+      // await httpRequest(import.meta.env.VITE_URL_EMAIL, 'CREATE', { correo: formState.correo });
+
+      setTimeout(() => {
+        // resetear form 
+
+      }, 2600);
+
+    } catch (error) {
+      toast('error', error);
+    }
+  }
   return (
     <Col className='mt-2'>
       <Card id="cardregister" style={{ maxWidth: '400px' }} className=" mx-auto p-2 ">
@@ -81,7 +82,7 @@ export const UserAdminForm = ({newUser}) => {
                 <option value="Seleccione" disabled  > Seleccione Tipo de Usuario </option>
                 <option value="1" > Cliente </option>
                 <option value="2" > Administrador </option>
-               
+
               </Form.Select>
             </Col>
           </Form.Group>
@@ -95,7 +96,6 @@ export const UserAdminForm = ({newUser}) => {
           </Form.Group>
         </Form>
       </Card>
-      <ToastContainer />
     </Col>
 
   )

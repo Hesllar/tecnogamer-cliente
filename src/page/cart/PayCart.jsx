@@ -1,7 +1,6 @@
 import { useEffect, useContext } from 'react';
 import { Row, Container, Col, Table, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import { ProductContext } from '../../context/ProductContext';
 import { UserContext } from '../../context/UserContext';
 import { httpRequest, numberFormat, toast } from '../../helpers';
@@ -149,7 +148,6 @@ export const PayCart = () => {
 
                 </Col>
             </Row>
-            <ToastContainer />
         </Container>
 
     )

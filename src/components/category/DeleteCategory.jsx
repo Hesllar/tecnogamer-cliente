@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { Modal, Alert, Button } from 'react-bootstrap'
-import { ToastContainer } from 'react-toastify';
 import { CategoryContext } from '../../context/CategoryContext';
 import { httpRequest, toast } from '../../helpers';
 
@@ -58,7 +57,6 @@ export const DeleteCategory = ({ isOpen, close, value }) => {
                 <Button variant="secondary" onClick={close} >Cancelar</Button>
                 <Button variant="danger" onClick={() => { handleDelete(value) }} >Eliminar Categoría</Button>
             </Modal.Footer>
-            <ToastContainer />
         </Modal>
 
     )

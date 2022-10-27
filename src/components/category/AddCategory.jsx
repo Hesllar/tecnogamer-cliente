@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Form, Button, Col, Card, Row } from 'react-bootstrap';
-import { ToastContainer } from 'react-toastify';
 import { useForm } from '../../hooks';
 import { httpRequest, toast, waitMoment } from '../../helpers';
 import { useContext } from 'react';
@@ -76,7 +75,6 @@ export const AddCategory = () => {
           </Form.Group>
         </Form>
       </Card>
-      <ToastContainer />
     </Col>
 
   )

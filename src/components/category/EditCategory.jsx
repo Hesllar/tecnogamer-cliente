@@ -1,6 +1,5 @@
 import { useContext, useEffect } from 'react'
 import { Modal, Form, Button } from 'react-bootstrap'
-import { ToastContainer } from 'react-toastify';
 import { CategoryContext } from '../../context/CategoryContext';
 import { httpRequest, toast } from '../../helpers';
 import { useForm } from '../../hooks';
@@ -79,7 +78,6 @@ export const EditCategory = ({ isOpen, close, value }) => {
           <Button type="submit" variant="primary">Actualizar Categoría </Button>
         </Modal.Footer>
       </Form>
-      <ToastContainer />
     </Modal>
 
   )

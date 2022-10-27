@@ -28,8 +28,6 @@ export const Categorys = () => {
         }
     }
 
-
-
     useEffect(() => {
 
         getProducts();

@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { Form, Button, Col, Card, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import { UserContext } from '../../context/UserContext';
 import { httpRequest, toast, waitMoment } from '../../helpers';
 import { useForm } from '../../hooks';
@@ -50,8 +49,8 @@ export const Login = () => {
 
             navigate('/', { replace: true });
 
+            toast('success', data.message);
         } catch (error) {
-            console.log(error)
             toast('error', error);
         }
     }
@@ -76,7 +75,6 @@ export const Login = () => {
                     </Form.Group>
                 </Form>
             </Card>
-            <ToastContainer />
         </Col>
     )
 }
