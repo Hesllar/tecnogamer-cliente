@@ -9,6 +9,8 @@ export const routes = {
     addMark: '/addMark',
     userAdmin: '/userAdmin',
     payCart: '/payCart',
-    categorys: '/categorys'
+    categorys: '/categorys',
+    detialPay: '/detailPay',
+    shopHistory: '/shopHistory'
 }
 

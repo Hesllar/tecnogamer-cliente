@@ -1,9 +1,11 @@
+import moment from 'moment/moment';
 import { useEffect, useContext } from 'react';
 import { Row, Container, Col, Table, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import { ProductContext } from '../../context/ProductContext';
 import { UserContext } from '../../context/UserContext';
 import { httpRequest, numberFormat, toast } from '../../helpers';
+
 
 export const PayCart = () => {
 
@@ -71,11 +73,11 @@ export const PayCart = () => {
             const order = {
                 products: listProducts,
                 valorCompra: calTotal(),
-                fechaCompra: new Date(),
+                fechaCompra: moment().format('L LT'),
                 usuarioId: user.userData._id,
                 tipoPago: 'NO ACTIVO AÚN',
                 estadoPago: 'NO ACTIVO AÚN',
-                fechaPago: new Date(),
+                fechaPago: moment().format('L LT'),
             }
 
             const resp = await httpRequest(import.meta.env.VITE_PAY, 'CREATE', order);
@@ -94,6 +96,8 @@ export const PayCart = () => {
 
             const { data } = resp;
 
+            navigate(`/detailPay/${data.Data._id}`);
+
             toast('success', data.message);
 
         } catch (error) {
@@ -103,9 +107,14 @@ export const PayCart = () => {
 
 
     }
+
     useEffect(() => {
         if (!user.logged) navigate('/')
     }, [user.logged])
+
+    useEffect(() => {
+        if (products.length === 0) navigate('/')
+    }, [])
 
 
     return (

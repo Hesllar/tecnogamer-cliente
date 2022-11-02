@@ -93,6 +93,7 @@ export const Header = () => {
             title='Mi cuenta'>
             <NavDropdown.Item onClick={openPerfil}>Perfil</NavDropdown.Item>
             <NavDropdown.Item onClick={openPass}>Cambiar contraseña</NavDropdown.Item>
+            <NavDropdown.Item as={NavLink} to={routes.shopHistory}>Historial de compra</NavDropdown.Item>
             <NavDropdown.Item onClick={logout}>Cerrar sesión</NavDropdown.Item>
           </NavDropdown>
         }

@@ -20,7 +20,7 @@ export const useGetProducts = () => {
         const res = await httpRequest(import.meta.env.VITE_URL_ALL_PRODUCTS, 'GET');
 
         const { Data } = res.data;
-
+        console.log(Data)
         setProduct({
             data: Data,
             isLoading: false
