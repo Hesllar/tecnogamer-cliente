@@ -48,7 +48,7 @@ export const AppRouter = () => {
                   {/* Rutas usuario */}
                   <Route path={routes.login} element={<LoginPage />} />
                   <Route path={routes.register} element={<RegisterPage />} />
-                  <Route path={`${routes.detialPay}/:id`} element={<DetailPay />} />
+                  <Route path={routes.detialPay} element={<DetailPay />} />
 
                   {/* Rutas carrito */}
                   <Route path={routes.payCart} element={<PayCart />} />

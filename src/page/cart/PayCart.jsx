@@ -1,5 +1,5 @@
 import moment from 'moment/moment';
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useRef, useState } from 'react';
 import { Row, Container, Col, Table, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import { ProductContext } from '../../context/ProductContext';
@@ -9,11 +9,15 @@ import { httpRequest, numberFormat, toast } from '../../helpers';
 
 export const PayCart = () => {
 
+    const sendWeb = useRef();
+
     const navigate = useNavigate();
 
     const { user } = useContext(UserContext);
 
     const { products, setProducts } = useContext(ProductContext);
+
+    const [info, setInfo] = useState({ url: '', token: '' });
 
     const calTotal = () => {
         let sum = 0;
@@ -70,17 +74,8 @@ export const PayCart = () => {
                 }
             });
 
-            const order = {
-                products: listProducts,
-                valorCompra: calTotal(),
-                fechaCompra: moment().format('L LT'),
-                usuarioId: user.userData._id,
-                tipoPago: 'NO ACTIVO AÚN',
-                estadoPago: 'NO ACTIVO AÚN',
-                fechaPago: moment().format('L LT'),
-            }
 
-            const resp = await httpRequest(import.meta.env.VITE_PAY, 'CREATE', order);
+            const resp = await httpRequest(import.meta.env.VITE_PAY, 'CREATE', { listProducts, user: user.userData._id, total: calTotal() });
 
             if (resp.status !== 200) {
                 const { data } = resp.response;
@@ -90,15 +85,18 @@ export const PayCart = () => {
                 return;
             }
 
-            localStorage.removeItem('products');
+            // localStorage.removeItem('products');
 
-            setProducts([]);
+            // setProducts([]);
 
             const { data } = resp;
 
-            navigate(`/detailPay/${data.Data._id}`);
-
             toast('success', data.message);
+
+            setInfo({
+                url: data.Data.url,
+                token: data.Data.token
+            });
 
         } catch (error) {
             toast('error', error);
@@ -115,6 +113,12 @@ export const PayCart = () => {
     useEffect(() => {
         if (products.length === 0) navigate('/')
     }, [])
+
+    useEffect(() => {
+        if (info.url !== '') {
+            sendWeb.current.submit();
+        }
+    }, [info.url])
 
 
     return (
@@ -157,6 +161,9 @@ export const PayCart = () => {
 
                 </Col>
             </Row>
+            <form action={info?.url} method="POST" ref={sendWeb}>
+                <input type="hidden" name="token_ws" value={info?.token} />
+            </form>
         </Container>
 
     )

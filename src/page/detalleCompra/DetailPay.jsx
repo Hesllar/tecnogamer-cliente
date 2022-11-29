@@ -1,44 +1,46 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Accordion, Button, Col, Container, Row, Spinner, Table } from "react-bootstrap"
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { numberFormat, toast } from "../../helpers";
 import { httpRequest } from "../../helpers/httpRequest";
 
 export const DetailPay = () => {
 
-    const { id } = useParams();
+    const [searchParams, setSearchParams] = useSearchParams();
 
-    const { user } = useContext(UserContext);
+    const tokens = useMemo(() => (searchParams.get('token_ws')) ? 'token_ws' : 'TBK_TOKEN', []);
 
-    const navigate = useNavigate();
+    //const { user } = useContext(UserContext);
 
-    const [detialPay, setDetialPay] = useState({ pay: null, user: null, products: [] });
+    // const navigate = useNavigate();
 
-    const { pay, user: userPay, products } = detialPay;
+    // const [detialPay, setDetialPay] = useState({ pay: null, user: null, products: [] });
+
+    // const { pay, user: userPay, products } = detialPay;
 
     const getDetail = async () => {
         try {
-            const { status, data } = await httpRequest(`${import.meta.env.VITE_DETAIL_PAY}${id}`, 'GET');
+            const { status, data } = await httpRequest(`${import.meta.env.VITE_VERIFY_PAY}`, 'CREATE', { token: searchParams.get(tokens) });
             if (status === 200) {
-                return setDetialPay(data.Data);
+                console.log(data)
+                //return setDetialPay(data.Data);
             }
             toast('error', 'Error inesperado');
         } catch (error) {
+            console.log(error)
             toast('error', error);
         }
 
     }
 
     useEffect(() => {
-        if (user.logged) {
-            getDetail();
-        }
+        getDetail();
     }, []);
 
-    useEffect(() => {
-        if (!user.logged) navigate('/')
-    }, []);
+    // useEffect(() => {
+    //     if (!user.logged) navigate('/')
+    // }, []);
 
     return (
         <Container className='mt-5'>
@@ -55,7 +57,7 @@ export const DetailPay = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {
+                            {/* {
                                 (products.length === 0)
                                     ? <tr key={1}>
                                         <td><Spinner animation="border" /></td>
@@ -78,7 +80,7 @@ export const DetailPay = () => {
                             }
                             {
                                 (products.length > 0) && <tr key={2}><td className='d-flex justify-content-end'>Total: {numberFormat(pay.valorCompra)} </td></tr>
-                            }
+                            } */}
                         </tbody>
                     </Table>
                 </Col>
@@ -88,13 +90,13 @@ export const DetailPay = () => {
                     <Accordion>
                         <Accordion.Item eventKey="0">
                             <Accordion.Header>Información venta</Accordion.Header>
-                            <Accordion.Body>
+                            {/* <Accordion.Body>
                                 <p>Nombre cliente: {userPay?.nombre}</p>
                                 <p>Fono: {userPay?.fono}</p>
                                 <p>Correo: {userPay?.correo}</p>
                                 <p>Total compra: {numberFormat(pay?.valorCompra)}</p>
                                 <p>Fecha compra: {pay?.fechaCompra}</p>
-                            </Accordion.Body>
+                            </Accordion.Body> */}
                         </Accordion.Item>
                     </Accordion>
                 </Col>
