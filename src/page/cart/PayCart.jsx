@@ -5,6 +5,8 @@ import { ToastContainer } from 'react-toastify';
 import { ProductContext } from '../../context/ProductContext';
 import { UserContext } from '../../context/UserContext';
 import { httpRequest, numberFormat, toast } from '../../helpers';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes, faPlus,faMinus } from '@fortawesome/free-solid-svg-icons'
 
 export const PayCart = () => {
 
@@ -110,47 +112,83 @@ export const PayCart = () => {
 
 
     return (
-        <Container className='mt-5'>
-            <Row>
-                <Col>
-                    <Table striped bordered hover>
-                        <thead>
-                            <tr className='text-center'>
-                                <th >#</th>
-                                <th>Producto</th>
-                                <th>Precio Unitario</th>
-                                <th>Precio</th>
-                                <th>Cantidad</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {(products.length > 0)
-                                ? products.map((prod, i) => (
+        <>
+            <Container className='mt-5'>
+                <Row>
+                    <Col>
+                        <Table striped bordered hover>
+                            <thead>
+                                <tr className='text-center'>
+                                    <th >#</th>
+                                    <th>Producto</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {(products.length > 0)
+                                    ? products.map((prod, i) => (
+                                        <tr key={prod._id}>
+                                            <td>{i + 1}</td>
+                                            <td><Row><Col>{prod.nombreProducto}</Col><Col><img className="d-block w-50" src={`data:image/${prod.extension};base64, ${prod.img64}`} alt="IMG" /></Col></Row></td>
+                                            <td>{numberFormat(prod.precio)}</td>
+                                            <td>{numberFormat(parseInt(prod.cant) * parseInt(prod.precio))}</td>
+                                            <td className='d-flex justify-content-between'><Button className='btn btn-primary' onClick={() => handleDelete(prod._id)}>-</Button> {prod.cant}<Button className='btn btn-primary' onClick={() => hadleAdd(prod._id)}>+</Button> </td>
+                                        </tr>
+                                    ))
+                                    : ''
+                                }
+                                <tr><td className='d-flex justify-content-end'>Total: {numberFormat(calTotal())} </td></tr>
+                            </tbody>
+                        </Table>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className='d-flex justify-content-end'>
+                        {
+                            (products.length > 0) && <Button className='btn btn-success' onClick={pay}>Comprar</Button>
+                        }
+
+                    </Col>
+                </Row>
+                <ToastContainer />
+            </Container>
+            <div className="container-fluid">
+                <div className="row px-xl-5">
+                    <div className="col-lg-8 table-responsive mb-5">
+                        <table className="table table-light table-borderless table-hover text-center mb-0">
+                            <thead className="thead-dark">
+                                <tr>
+                                    <th >#</th>
+                                    <th>Producto</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody className="align-middle">
+                                {(products.length > 0) ? products.map((prod, i) => (
                                     <tr key={prod._id}>
                                         <td>{i + 1}</td>
-                                        <td><Row><Col>{prod.nombreProducto}</Col><Col><img className="d-block w-50" src={`data:image/${prod.extension};base64, ${prod.img64}`} alt="IMG" /></Col></Row></td>
-                                        <td>{numberFormat(prod.precio)}</td>
-                                        <td>{numberFormat(parseInt(prod.cant) * parseInt(prod.precio))}</td>
-                                        <td className='d-flex justify-content-between'><Button className='btn btn-primary' onClick={() => handleDelete(prod._id)}>-</Button> {prod.cant}<Button className='btn btn-primary' onClick={() => hadleAdd(prod._id)}>+</Button> </td>
+                                        <td className="align-middle"><img src={`data:image/${prod.extension};base64, ${prod.img64}`} alt="IMG"  style={{ width: '50px' }}/>{prod.nombreProducto}</td>
+                                        <td className="align-middle">{numberFormat(prod.precio)}</td>
+                                        <td className="align-middle">
+                                            <div className="input-group-btn">
+                                                <FontAwesomeIcon className="restar" icon={faMinus} onClick={() => handleDelete(prod._id)} /> {prod.cant} <FontAwesomeIcon className="restar" icon={faPlus}  onClick={() => hadleAdd(prod._id)} />
+                                            </div>
+                                        </td>
+                                        <td className="align-middle">{numberFormat(parseInt(prod.cant) * parseInt(prod.precio))}</td>
+                                        <td className="align-middle"><button className="btn btn-sm btn-danger"><FontAwesomeIcon className="eliminar" icon={faTimes} /></button></td>
                                     </tr>
-                                ))
-                                : ''
-                            }
-                            <tr><td className='d-flex justify-content-end'>Total: {numberFormat(calTotal())} </td></tr>
-                        </tbody>
-                    </Table>
-                </Col>
-            </Row>
-            <Row>
-                <Col className='d-flex justify-content-end'>
-                    {
-                        (products.length > 0) && <Button className='btn btn-success' onClick={pay}>Comprar</Button>
-                    }
-
-                </Col>
-            </Row>
-            <ToastContainer />
-        </Container>
-
+                                )): '' }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </>
     )
 }
