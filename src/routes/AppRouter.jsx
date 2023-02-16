@@ -20,6 +20,8 @@ import { ProductProvider } from '../context/ProductProvider';
 import { PayCart } from '../page/cart/PayCart';
 import { Categorys } from '../page/categoria/Categorys';
 import { CategoryProvider } from '../context/CategoryProvider';
+import { DetailPay } from '../page/detalleCompra/DetailPay';
+import { HistorialCompra } from '../page/historialCompra/HistorialCompra';
 
 export const AppRouter = () => {
   return (
@@ -46,10 +48,13 @@ export const AppRouter = () => {
                   {/* Rutas usuario */}
                   <Route path={routes.login} element={<LoginPage />} />
                   <Route path={routes.register} element={<RegisterPage />} />
+                  <Route path={routes.detialPay} element={<DetailPay />} />
 
                   {/* Rutas carrito */}
                   <Route path={routes.payCart} element={<PayCart />} />
 
+                  {/* Historial de compra */}
+                  <Route path={routes.shopHistory} element={<HistorialCompra />} />
                   {/* Ventana de errores  */}
                   <Route exact path="/*" element={<NotFoundPages />} />
 

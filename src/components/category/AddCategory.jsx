@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Form, Button, Col, Card, Row } from 'react-bootstrap';
-import { ToastContainer } from 'react-toastify';
 import { useForm } from '../../hooks';
-import { httpRequest, toast } from '../../helpers';
+import { httpRequest, toast, waitMoment } from '../../helpers';
 import { useContext } from 'react';
 import { CategoryContext } from '../../context/CategoryContext';
 
@@ -16,20 +15,25 @@ export const AddCategory = () => {
     nombreCategoria: ''
   });
 
-
+  const { wait, setWait } = waitMoment();
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
 
+      setWait(true);
+
       const resp = await httpRequest(import.meta.env.VITE_URL_CREATE_CATEGORY, 'CREATE', formState);
 
       if (resp.status !== 200) {
+
         const { data } = resp.response;
 
         toast('error', data.message || 'Error no controlado');
 
         onResetForm();
+
+        setWait(false);
 
         return;
       }
@@ -41,6 +45,8 @@ export const AddCategory = () => {
       onResetForm();
 
       toast('success', data.message);
+
+      setWait(false);
 
     } catch (error) {
 
@@ -65,11 +71,10 @@ export const AddCategory = () => {
             <Link to="/" className="linkInicio">&larr; Volver Al Inicio</Link>
           </Form.Group>
           <Form.Group>
-            <Button type="submit" className="RegisterBoton mt-2" variant="primary" >Crear</Button>
+            <Button type="submit" className="RegisterBoton mt-2" variant="primary" disabled={!!wait} >Crear</Button>
           </Form.Group>
         </Form>
       </Card>
-      <ToastContainer />
     </Col>
 
   )

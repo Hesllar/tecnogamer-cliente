@@ -27,9 +27,6 @@ export const Categorys = () => {
             console.log(error)
         }
     }
-
-
-
     useEffect(() => {
 
         getProducts();
@@ -37,10 +34,12 @@ export const Categorys = () => {
     }, [id]);
 
     return (
-        <Container className={(productsCategory.length === 0) ? 'd-flex justify-content-center' : ''}>
+        <Container className={(productsCategory) ? 'd-flex justify-content-center' : ''}>
             {
                 (productsCategory.length === 0) ? (<Spinner animation="border" />)
-                    : (
+                    : (productsCategory[0] === 'No hay datos')
+                        ? <span>No hay datos</span>
+                        :
                         <Row className='mt-2 mb-2'>
                             {
                                 productsCategory.map(pro => (
@@ -62,7 +61,7 @@ export const Categorys = () => {
                             }
 
                         </Row>
-                    )
+
             }
 
 

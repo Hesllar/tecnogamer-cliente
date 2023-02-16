@@ -1,20 +1,25 @@
-import { useEffect, useContext } from 'react';
+import moment from 'moment/moment';
+import { useEffect, useContext, useRef, useState } from 'react';
 import { Row, Container, Col, Table, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import { ProductContext } from '../../context/ProductContext';
 import { UserContext } from '../../context/UserContext';
 import { httpRequest, numberFormat, toast } from '../../helpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faPlus,faMinus } from '@fortawesome/free-solid-svg-icons'
 
+
 export const PayCart = () => {
+
+    const sendWeb = useRef();
 
     const navigate = useNavigate();
 
     const { user } = useContext(UserContext);
 
     const { products, setProducts } = useContext(ProductContext);
+
+    const [info, setInfo] = useState({ url: '', token: '' });
 
     const calTotal = () => {
         let sum = 0;
@@ -71,17 +76,8 @@ export const PayCart = () => {
                 }
             });
 
-            const order = {
-                products: listProducts,
-                valorCompra: calTotal(),
-                fechaCompra: new Date(),
-                usuarioId: user.userData._id,
-                tipoPago: 'NO ACTIVO AÚN',
-                estadoPago: 'NO ACTIVO AÚN',
-                fechaPago: new Date(),
-            }
 
-            const resp = await httpRequest(import.meta.env.VITE_PAY, 'CREATE', order);
+            const resp = await httpRequest(import.meta.env.VITE_PAY, 'CREATE', { listProducts, user: user.userData._id, total: calTotal() });
 
             if (resp.status !== 200) {
                 const { data } = resp.response;
@@ -91,13 +87,18 @@ export const PayCart = () => {
                 return;
             }
 
-            localStorage.removeItem('products');
+            // localStorage.removeItem('products');
 
-            setProducts([]);
+            // setProducts([]);
 
             const { data } = resp;
 
             toast('success', data.message);
+
+            setInfo({
+                url: data.Data.url,
+                token: data.Data.token
+            });
 
         } catch (error) {
             toast('error', error);
@@ -106,9 +107,20 @@ export const PayCart = () => {
 
 
     }
+
     useEffect(() => {
         if (!user.logged) navigate('/')
     }, [user.logged])
+
+    useEffect(() => {
+        if (products.length === 0) navigate('/')
+    }, [])
+
+    useEffect(() => {
+        if (info.url !== '') {
+            sendWeb.current.submit();
+        }
+    }, [info.url])
 
 
     return (

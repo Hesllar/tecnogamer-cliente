@@ -8,34 +8,32 @@ import { userGetUser } from '../../../hooks';
 export const UserAdminSetting = () => {
 
 
-  const {user, setUser, setIsUpdate} = userGetUser();
+  const { user, setUser, setIsUpdate } = userGetUser();
 
-  const newUser = (userAdd) =>{
-    setUser(
-      [...user, userAdd],
-    )
+  const newUser = (userAdd) => {
+    setUser([...user, userAdd])
   }
 
-  const deleteUser = (id) =>{
-    const newData = user.filter( p => p._id !== id);
+  const deleteUser = (id) => {
+    const newData = user.filter(p => p._id !== id);
     setUser(
       newData,
     );
   }
-  
+
   return (
     <Container className='regcontrainer'>
       <Row className='mt-2 mb-2'>
         <Col className='col-xs-12 col-sm-12  col-md-6'>
-            <UserAdminForm newUser={newUser}   /> 
-            
+          <UserAdminForm newUser={newUser} />
+
         </Col>
         <Col className='col-xs-12 col-sm-12  col-md-6'>
-            <UserAdminList  
-              data={user} 
-              deleteUser={deleteUser} 
-              setIsUpdate={setIsUpdate}
-            />
+          <UserAdminList
+            data={user}
+            deleteUser={deleteUser}
+            setIsUpdate={setIsUpdate}
+          />
         </Col>
       </Row>
     </Container >

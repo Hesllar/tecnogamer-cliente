@@ -1,6 +1,5 @@
 import { useContext, useEffect, useRef } from 'react';
 import { Modal, Form, Button, Col, Card, Row } from 'react-bootstrap';
-import { ToastContainer } from 'react-toastify';
 import { useForm } from '../../hooks';
 import { CategoryList } from '../category/CategoryList';
 import { MarkList } from './MarkList';
@@ -179,7 +178,6 @@ export const EditProduct = ({ isOpen, close, value, mark, setIsUpdate }) => {
                     </Form>
                 </Card>
             </Col>
-            <ToastContainer />
         </Modal>
 
     )

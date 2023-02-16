@@ -1,5 +1,5 @@
-import { useContext, useState } from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ProductContext } from '../../context/ProductContext';
 import { NavDropdown, Button } from 'react-bootstrap';
 import { routes } from '../../routes/config-route';
